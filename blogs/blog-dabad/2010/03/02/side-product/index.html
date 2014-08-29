@@ -1,0 +1,574 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>How To make an "RCP" Eclipse based</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <h1>Goal</h1>
+
+<ul>
+<li>Includes your custom plug-ins in a minimal Eclipse based product</li>
+<li>Add capability to update your plug-ins from an update site</li>
+<li>Make RCP for windows, linux and Mac in headless mode.</li>
+</ul>
+
+
+<h1>The product</h1>
+
+<p>Eclipse PDE can use an .product file to build a complete custom RCP.<br/>
+This file define plug-ins to includes and some configuration like splash screen application icons and more.</p>
+
+<p>So create new plug-in project to define branding elements.
+Create a .product file :
+* Select in product definition the plug-in that include this product
+* Select the application to use (default Eclipse is org.eclipse.ui.ide.workbench)
+* Select 'The product configuration is based on' : plug-ins
+* Go to dependencies tab</p>
+
+<pre><code>* Add all your custom plug-ins, and click on 'add Required Plug-ins', this search through &amp;nbsp;plug-ins to list all direct and transitive dependencies.
+</code></pre>
+
+<p>Then you can test your product using PDE button "launch Eclipse Application”.</p>
+
+<p>If all is fine you can go to next step.</p>
+
+<h1>Make an RCP that can be updated</h1>
+
+<p>The Eclipse update manager use features so your product must be based to features.</p>
+
+<h2>Make feature for dependencies</h2>
+
+<p>Take plug-ins list computed in 1) remove from them your own plug-ins, and platform dependencies.<br/>
+Add remaining in the plug-ins tab of this feature.<br/>
+Use "compute” on dependencies tab.<br/></p>
+
+<p>Getting this plug-ins list may be ... scary. To avoid omissions I do :</p>
+
+<ul>
+<li>create an xml file</li>
+<li>put all plug-ins entry found in .product after 1) done into /root/needed</li>
+<li>open platform feature and get all plug-ins and fragments entries found in included features and dependencies</li>
+<li>put all of them into /root/provided</li>
+<li>using xslt i generate another xml file that create an &lt; plugin> entry copying @* from /root/provided</li>
+<li>past generated &lt; plugin> into feature.xml file</li>
+</ul>
+
+
+<p>It's the painful part.</p>
+
+<p>It's also possible to directly add in the product all required dependencies:</p>
+
+<ul>
+<li>The good news is that all plug-ins can be updated from original update site.</li>
+<li>The bad news is it's not less painful to do, and your product will be bigger.</li>
+</ul>
+
+
+<h2>Make feature for your plug-ins</h2>
+
+<p>Simply add all your plug-ins in the feature plug-ins tab.<br/>
+Use "compute” on dependencies tab.</p>
+
+<h2>Configure .product file</h2>
+
+<p>So after set your product as based on feature go in dependencies tab and add:</p>
+
+<ul>
+<li>org.eclipse.platform this contains all Eclipse platform dependencies and basic plug-ins</li>
+<li>"your feature that includes dependencies”</li>
+<li>"your feature that includes your plug-ins”</li>
+<li>you may create an site.xml file used to configure category when creating update site</li>
+<li>simply create site.xml using Eclipse PDE editor, create categories and includes features (dependencies feature and your own features)</li>
+</ul>
+
+
+<h1>Headless Product Builder</h1>
+
+<p>Eclipse PDE includes tools to build products based on Ant scripts and custom task definition.</p>
+
+<p>Create a folder (Eclipse project why not ?) with 2 files :
+* build.properties, properties file to configure PDE builder
+* build.xml, ant script to launch PDE builder</p>
+
+<p>build.xml :</p>
+
+<p> <project default="main">
+ <property file="build.properties" /></p>
+
+<p> <target name="main">
+ <!-- by default, check for deltapack co-located with eclipse -->
+ <!-- Check that we have a deltapack -->
+ <available property="haveDeltaPack" file="${deltapack}" />
+ <fail unless="haveDeltaPack" message="The deltapack is required to build this product. Please edit buildProduct.xml or set the &quot;deltapack&quot; property." /></p>
+
+<p> <property name="buildDirectory" value="${builder}/buildDirectory" />
+ <property name="pluginPath" value="${sources}${path.separator}${deltapack}" />
+ <echoproperties></echoproperties>
+ <echo message="builder : ${eclipse.pdebuild.scripts}/productBuild/productBuild.xml"></echo>
+ <ant antfile="${eclipse.pdebuild.scripts}/productBuild/productBuild.xml" /></p>
+
+<p> <mkdir dir="${distros}" />
+ <move todir="${distros}" overwrite="true" verbose="true">
+ <fileset dir="${buildDirectory}/${buildLabel}">
+ <include name="*.zip"/>
+ <include name="*.tar.gz"/>
+ </fileset>
+ </move>
+ </target></p>
+
+<p> <target name="pde-build">
+ <echo message="launcher path :${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar"></echo>
+ <delete file="${logFile}" failonerror="false"/>
+ <record name="${logFile}" loglevel="debug" action="start" />
+ <java fork="true" failonerror="true" jar="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar">
+ <arg value="-Xmx512m" />
+ <arg value="-Xms512m" />
+ <arg value="-application" />
+ <arg value="org.eclipse.ant.core.antRunner" />
+ <arg value="-buildfile" />
+ <arg value="build.xml" />
+ <arg value="-Dtimestamp=${timestamp}" />
+ <classpath>
+ <pathelement location="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
+ </classpath>
+ </java>
+ <record name="${logFile}" action="stop" />
+ </target>
+ </project></p>
+
+<p>But configuration properties must be set according with your project. See 3-2</p>
+
+<h2>Prepare resources</h2>
+
+<p>Sources:</p>
+
+<ul>
+<li>Create "sources” folder where you create, a "plugins” folder and a "features” folder.</li>
+<li>Copy your plug-ins project in "plugins”, and your feature into "features”.</li>
+</ul>
+
+
+<p>Eclipse builder:</p>
+
+<ul>
+<li>Copy an Eclipse that you used to develop yours plug-ins project (so it contains installed dependencies used to compile yours projects)</li>
+<li>Unpack deltapack archive into &lt; eclipse.home>/deltapack folder, this is used to build RCP for other system, see [http://download.eclipse.org/eclipse/downloads/ http://download.eclipse.org/eclipse/downloads/] select your eclipse version and search for deltapack.</li>
+</ul>
+
+
+<h2>Setup PDE</h2>
+
+<p>Create build.properties by copying from example and replace all &lt; .. > by your values</p>
+
+<pre><code>###############################################################################
+# Copyright (c) 2003, 2006 IBM Corporation and others.
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+# IBM Corporation - initial API and implementation ###############################################################################
+
+## builder paths ##
+#builder=&lt;workingFolder&gt;
+#example builder=/Users/davidabad/Workspace2.0/test/PDE_builder
+baseLocation=${builder}/eclipse
+# version can be found in ${baseLocation}/plugins/org.eclipse.equinox.launcher_...
+equinoxLauncherPluginVersion=&lt;versionNum&gt;
+#example equinoxLauncherPluginVersion=1.0.201.R35x_v20090715
+deltapack=${baseLocation}/deltapack/eclipse
+sources=${builder}/sources
+distros=${builder}/dist
+logFile=build_pde-build_debug.log
+## config ##
+launcherName=&lt;myProduct&gt;
+# The prefix that will be used in the generated archive.
+archivePrefix=&lt;MyProduct&gt;
+# ID of the build. Used in naming the build output.
+buildId=&lt;MyProduct&gt;
+# configuration to have dependencies resolution working as plugins product based
+filteredDependencyCheck=false
+flattenDependencies=true
+parallelCompilation=false
+product=${sources}/&lt;branding.plug-insPath&gt;/&lt;MyProduct&gt;.product
+#example product=${sources}/plugins/com.bluexml.side.Integration.eclipse.branding/side.product
+runPackager=true
+p2.gathering=true
+p2.metadata.repo=file:${builder}/repository
+p2.artifact.repo=file:${builder}/repository
+p2.category.site=file://${sources}/&lt;branding.plug-insPath&gt;/site.xml
+#example p2.category.site=file:///Users/davidabad/Workspace2.0/S-IDE/Integration/trunk/com.bluexml.side.Integration.buildHudson/config/site.xml
+# The location underwhich all of the build output will be collected.
+collectingFolder=${archivePrefix}
+# The list of {os, ws, arch} configurations to build. This
+# value is a '&amp;' separated list of ',' separate triples. For example,
+# configs=win32,win32,x86 &amp; linux,motif,x86
+# By default the value is *,*,*
+#configs = win32, win32, x86
+#configs=win32, win32, x86 &amp; \
+#linux, gtk, ppc &amp;\
+# linux, gtk, x86 &amp; \
+#linux, gtk, x86_64 &amp; \
+#linux, motif, x86 &amp; \
+#solaris, motif, sparc &amp; \
+#solaris, gtk, sparc &amp; \
+#aix, motif, ppc &amp; \
+#hpux, motif, PA_RISC &amp; \
+#macosx, carbon, ppc
+configs=linux, gtk, x86 &amp; \
+win32, win32, x86 &amp; \
+macosx, carbon, x86
+# By default PDE creates one archive (result) per entry listed in the configs property.
+# Setting this value to try will cause PDE to only create one output containing all
+# artifacts for all the platforms listed in the configs property.
+#groupConfigurations=true
+#Allow cycles involving at most one bundle that needs to be compiled with the rest being binary bundles.
+#allowBinaryCycles = true
+# Type of build. Used in naming the build output. Typically this value is
+# one of I, N, M, S, ...
+buildType
+# Label for the build. Used in naming the build output
+buildLabel=${buildType}.${buildId}
+# Timestamp for the build. Used in naming the build output
+timestamp=007
+#this property indicates whether the resolution should be done in development mode (i.e. ignore multiple bundles with singletons)
+#resolution.devMode=false
+skipBase=true
+skipMaps=true
+skipFetch=true
+############# JAVA COMPILER OPTIONS ##############
+# For this example:
+# We specify the JRE locations for CDC-1.1/Foundation-1.1 and J2SE-1.5
+# because these are the required execution environments defined for the
+# bundles in the example.
+# The location of the Java jars to compile against. Typically the rt.jar for your JDK/JRE
+#bootclasspath=${java.home}/lib/rt.jar
+# If using an IBM VM, use
+#bootclasspath=${java.home}/lib/core.jar;${java.home}/lib/vm.jar
+# specific JRE locations to compile against. These values are used to compile bundles specifying a
+# Bundle-RequiredExecutionEnvironment. Uncomment and set values for environments that you support
+#CDC-1.0/Foundation-1.0= /path/to/rt.jar
+#CDC-1.1/Foundation-1.1=${java.home}/lib/rt.jar
+#OSGi/Minimum-1.0=
+#OSGi/Minimum-1.1=
+#JRE-1.1=
+#J2SE-1.2=
+#J2SE-1.3=
+#J2SE-1.4=
+#J2SE-1.5=${java.home}/lib/rt.jar:${java.home}/lib/jce.jar
+#JavaSE-1.6=${java.home}/lib/rt.jar:${java.home}/lib/jce.jar
+#PersonalJava-1.1=
+#PersonalJava-1.2=
+#CDC-1.0/PersonalBasis-1.0=
+#CDC-1.0/PersonalJava-1.0=
+#CDC-1.1/PersonalBasis-1.1=
+#CDC-1.1/PersonalJava-1.1=
+# Specify the output format of the compiler log when eclipse jdt is used
+logExtension=.log
+# Whether or not to include debug info in the output jars
+javacDebugInfo=true
+# Whether or not to fail the build if there are compiler errors
+javacFailOnError=true
+# Enable or disable verbose mode of the compiler
+javacVerbose=true
+# Extra arguments for the compiler. These are specific to the java compiler being used.
+#compilerArg=
+# Default value for the version of the source code. This value is used when compiling plug-ins that do not set the Bundle-RequiredExecutionEnvironment or set javacSource in build.properties
+javacSource=1.5
+# Default value for the version of the byte code targeted. This value is used when compiling plug-ins that do not set the Bundle-RequiredExecutionEnvironment or set javacTarget in build.properties.
+javacTarget=1.5
+</code></pre>
+
+<h1>Launch Build</h1>
+
+<p>Now resources have been copied, properties sets ...</p>
+
+<p>Ok boy let's Rock !</p>
+
+<p>Open terminal in directory where build.properties and build.xml is.</p>
+
+<p>Launch building by typing :</p>
+
+<blockquote><p>ant pde-build</p></blockquote>
+
+<p>wait and see.</p>
+
+<p>At the end your products builds can be found in "dist” folder and the update site in "repository”.</p>
+
+<p>This update site can be used to update previous built product or to install all your plug-ins on an clean simple Eclipse</p>
+
+<h1>Links Documentation</h1>
+
+<p>For more Example tuto ...
+http://www.vogella.de/eclipse.html</p>
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

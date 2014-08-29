@@ -1,0 +1,358 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Fuse and OpenVZ</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <h1>Use Case</h1>
+
+<p>To be able to use mount.davfs, I need to install fuse.</p>
+
+<p>My problem is I'm on a virtual machine, based on OpenVZ.</p>
+
+<h1>Problem</h1>
+
+<p>When installing fuse-utils through apt-get, everything went fine but mount.davfs doesn't work and give a short: /sbin/mount.davfs: can't open /dev/fuse</p>
+
+<p>This process works smoothly on a virtual machine based on Fully Virtualized (KVE) but not on an OpenVZ</p>
+
+<h1>Diagnostic</h1>
+
+<p>In OpenVZ, in contrast with KVE, virtual machines share with host node kernel modules and devices. This means 2 important hings:</p>
+
+<ul>
+<li>the host node must have any module you want to use on virtual machines</li>
+<li>the host node must create devices and give permissions to virtual machines to use them</li>
+</ul>
+
+
+<h1>Solution</h1>
+
+<p>So, I needed, where $CTID is the container ID:</p>
+
+<ul>
+<li>to install fuse-utils on host node: apt-get install fuse-utils</li>
+<li>to install fuse-utils on the required container</li>
+<li>to create device on the host node through the following command: vzctl set $CTID --devnodes fuse:rw</li>
+</ul>
+
+
+<p>And finally, for the new module to be available, restart the container:</p>
+
+<pre><code>vzctl restart $CTID
+</code></pre>
+
+<h1>Problem</h1>
+
+<p>The problems you may have are often related to /dev/fuse. You can have:</p>
+
+<ul>
+<li>/sbin/mount.davfs: /dev/fuse: permission denied</li>
+<li>/sbin/mount.davfs: can't open /dev/fuse</li>
+<li>/SBIN/MOUNT.DAVFS: /DEV/FUSE: PERMISSION DENIED</li>
+</ul>
+
+
+<p>Your user is generally not in the right group, so add your user into fuse group and chmod 660 /dev/fuse. Ask google, a lot of people had this problem and solved it quickly (see 1).</p>
+
+<ul>
+<li>/SBIN/MOUNT.DAVFS: CAN'T OPEN /DEV/FUSE</li>
+</ul>
+
+
+<p>You probably first installed fuse on the virtual machine and the /dev/fuse device has so been created by your virtual machine but, as stated before, all kernel modules and devices are shared beetween the host node and containers. You can see it, with the right group and set of permissions, but you can't open it.</p>
+
+<p>You absolutely need to create the device in the Host Node. To do so, just remove it from the container (it means your virtual machine) with a plain "rm /dev/fuse" and create in the host node the corresponding /dev/fuse:</p>
+
+<pre><code>vzctl set $CTID devices c:10:229:rw save
+vzctl exec $CTID mknod /dev/fuse c 10 229
+</code></pre>
+
+<p>If you now look into /etc/vz/conf/$CTID.conf, you will see the following new line:</p>
+
+<pre><code>DEVNODES="fuse:rw "
+</code></pre>
+
+<p>Restart your container:</p>
+
+<pre><code>vzctl restart $CTID
+</code></pre>
+
+<p>And, miracle, everything will run smoothly :-)</p>
+
+<h1>Resources</h1>
+
+<ul>
+<li>http://www.nullamatix.com/fixed-fuse-failed-open-dev-fuse-permission-denied/</li>
+</ul>
+
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

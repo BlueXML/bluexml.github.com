@@ -1,0 +1,335 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Reduce PDF size after 300ppp and color scan.md</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <h1>Use Case</h1>
+
+<p>To manage paper documents in YaMma (Yet Another Mail Management Application), I do the following actions:</p>
+
+<ul>
+<li>scan 24bits-colors, 300ppp for good quality</li>
+<li>process them to ocr</li>
+<li>reduce their size</li>
+<li>create a pdf with the text from ocr embedded into the pdf</li>
+<li>For a document of 17 pages, its size is about 170Mo after such a scan. While this quality is interesting for OCR, there are about 10K documents into the company intranet and I can't put a file with such a size into my content repository...</li>
+</ul>
+
+
+<p>So the need for a solution to reduce the size of the document.</p>
+
+<h1>Solution</h1>
+
+<p>I can choose and configure my output from my scan:</p>
+
+<ul>
+<li>quality (100, 200, 300, 600, 1200ppp)</li>
+<li>color (B&amp;W, 8, 16, 24 bits color)</li>
+<li>output type (pdf, image, ...)</li>
+</ul>
+
+
+<p>I generally choose PDF output, 300ppp, 24 bits color and my scanner (a very cheap Brother DCP6690CW) finally creates such a file after creating a TIFF file for each page and concatenating them all together.</p>
+
+<p>To reduce file size, I then can:</p>
+
+<ul>
+<li>reduce all TIFF files through convert (ImageMagick) and concatenate them into a pdf one</li>
+<li>directly reduce PDF file through ghostscript (gs)</li>
+</ul>
+
+
+<p>By following this second option (I haven't studied the first one), I'm able to easily get a PDF file of about 1-3Mo with an enough good quality to have a correct reading.</p>
+
+<h1>Usage</h1>
+
+<p>Just get a ghostscript installation for your system. Then choose the quality you are looking for (screen &lt; ebook &lt; prepress, ...)</p>
+
+<pre><code>gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile=output.pdf input.pdf
+</code></pre>
+
+<p>or</p>
+
+<pre><code>gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -sOutputFile=output.pdf input.pdf
+</code></pre>
+
+<p>You can specify options for better quality or to produce PDF/X or PDF/A. Just have a look at the gs options on the manual. For a 160Mo PDF file, you will finally get a 1Mo file with screen option and 3Mo file with ebook one. Ebook quality is really better.</p>
+
+<h1>Pointers</h1>
+
+<ul>
+<li>http://www.ubuntugeek.com/ubuntu-tiphowto-reduce-adobe-acrobat-file-size-from-command-line.html</li>
+<li>http://pages.cs.wisc.edu/~ghost/doc/cvs/Ps2pdf.htm</li>
+</ul>
+
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

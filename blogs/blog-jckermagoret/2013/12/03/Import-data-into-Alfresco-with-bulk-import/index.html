@@ -1,0 +1,399 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Importer des données en masse dans Alfresco à l'aide de bulk import</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <h1>Introduction</h1>
+
+<p>Importer les données en masse est un travail risqué et laborieux. Au-delà de l'import, il faut en effet vérifier que toutes les données ont été effectivement importées. Si ce n'est pas le cas, il faut déterminer les données non importées pour ne réimporter que celles-ci du fait des contenus très volumineux qu'on peut être amenés à traiter (plusieurs centaines de Go, voire plusieurs To).</p>
+
+<p>Cet article décrit l'approche suivie par BlueXML pour importer les données dans un repository Alfresco Community ou Enterprise.</p>
+
+<h1>Solution</h1>
+
+<p>La solution repose sur l'utilisation du module <a href="https://code.google.com/p/alfresco-bulk-filesystem-import/">bulk import</a>. Ce module permet d'importer les contenus et les méta-données associées si nécessaires.</p>
+
+<p>Dans la version Alfresco Enterprise, le module bulk import a été repris par Alfresco et propose une fonctionnalité d'import "in place" qui évite de recopier les fichiers. Celle-ci n'est pas présente dans la version Alfresco Community et les contenus sont alors importées dans Alfresco.</p>
+
+<h1>Implémentation</h1>
+
+<p>L'import se fait à l'aide des étapes suivantes :</p>
+
+<ul>
+<li>import des données avec bulk_import</li>
+<li><p>vérification :</p></li>
+<li><p>calcul d'un find sur les données source</p></li>
+<li>calcul d'un find sur les données dans Alfresco, via l'API Alfresco</li>
+<li><p>calcul du delta entre les find</p></li>
+<li><p>copie via CIFS des contenus non importés la première fois</p></li>
+<li>vérification et copie</li>
+<li>copie des derniers fichiers à la main si pas trop nombreux</li>
+</ul>
+
+
+<p>La difficulté de cette implémentation est le mécanisme de calcul du find côté Alfresco car celui-ci est limité par défaut à 100000 vérifications de droits, ce qui posera problème si vous importes plus de 100000 fichiers.</p>
+
+<p>Il faut obligatoirement mettre en place un tél mécanisme de vérification et de contrôle car Alfresco n'importe pas toutes les données, et refuse même d'en importer certains quel que soit le nombre de tentatives. Le contournement le plus simple est donc de copier les contenus récalitrants via CIFS à l'aide d'un rsync.</p>
+
+<h2>Import des données via bulk import</h2>
+
+<p>Le système de bulk import propose un service web pour importer les données. Après avoir indiqué quelques paramètres, il suffit de l'appeler. Pour être totalement indépendant de la connexion au serveur qui peut dans certains cas interrompre l'import, je vous suggère d'utiliser le <a href="https://gist.github.com/jckermagoret/7769719">script</a> suivant :</p>
+
+<pre><code>#!/bin/sh
+
+#
+# LICENSE
+# @copyright BlueDolmen 2013
+# License Affero GPL
+# Use at your own risks
+#
+
+#
+# Imports content in Alfresco from filesystem through the use of bulk import system
+#
+
+LOGIN="admin"
+PASSWD="admin"
+HOST="localhost:8080"
+
+getTicket () {
+        curl -v "http://$HOST/alfresco/service/api/login?u=$LOGIN&amp;pw=$PASSWD"
+};
+
+importContent () {
+  TICKET="TICKET_88e8978b4973801cd309ff8440fbdee49302b130"
+
+  PARAMS="alf_ticket=$TICKET"
+  PARAMS="$PARAMS&amp;sourceDirectory=/data/repository/initial"
+  PARAMS="$PARAMS&amp;contentStore=default"
+  PARAMS="$PARAMS&amp;targetPath=/Company%20Home/Sites/test/documentLibrary"
+  PARAMS="$PARAMS&amp;replaceExisting=false"
+  PARAMS="$PARAMS&amp;batchSize=10"
+  PARAMS="$PARAMS&amp;numThreads=10"
+
+  #
+  # Use only if using for an Alfresco Enterprise
+  # -X POST "http://$HOST/alfresco/service/bulkfsimport/inplace/initiate?$PARAMS" \n
+
+  echo curl -v
+  echo         -X POST "http://$HOST/alfresco/service/bulkfsimport/initiate?$PARAMS"
+  echo         -H "Content-type: text/html;charset=UTF-8"
+  echo
+
+  curl -v \
+          -X POST "http://$HOST/alfresco/service/bulkfsimport/initiate?$PARAMS" \
+          -H "Content-type: text/html;charset=UTF-8"
+}
+
+$*
+</code></pre>
+
+<h2>Vérification</h2>
+
+<p>Il s'agit de construire 2 fichiers contenant le path absolu de chaque fichier contenu dans l'arborescence source et cible.</p>
+
+<h3>Arborescence source</h3>
+
+<p>Pour l'arborescence source, un simple find suffit à obtenir cette liste :</p>
+
+<pre><code>find /data/repository/initial &gt; find-initial.txt
+</code></pre>
+
+<h3>Arborescence cible</h3>
+
+<p>Pour l'arborescence cible, il faut écrire un script qui construit cette liste :</p>
+
+<h3>Comparaison des fichiers 'source' et 'cible'</h3>
+
+<p>On obtient finalement 2 fichiers qu'il faut comparer après les avoir nettoyés afin de n'obtenir que les fichiers réellement différents.</p>
+
+<h2>Copie des fichiers récalcitrants</h2>
+
+<p>Le delta calculé précédemment doit être copié dans Alfresco. Pour cela, il suffit de faire un rsync prenant en paramètre la liste des fichiers à copier :</p>
+
+<pre><code>rsync -avP --files-from diff.txt /mnt/alfresco/Company%20Home/tmp
+</code></pre>
+
+<p>tmp étant un répertoire créé dans l'entrepôt Alfresco.</p>
+
+<h1>Conclusion</h1>
+
+<p>Finalement, toutes les données sont copiées</p>
+
+<h1>Ressources</h1>
+
+<ul>
+<li><a href="http://support.apple.com/kb/ht3939">Identifier son iPhone</a></li>
+</ul>
+
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

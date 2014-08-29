@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Java vs Javascript to develop business rules in Alfresco workflows</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <p>While Javascript Server Side may seem easier, it's a real mess to debug. So, I clearly prefer to use Java which avoid this kind of problems thanks to JPDA.</p>
+
+<p>For example, use the following javascript snippet into a transition in an Alfresco Workflow based on jBPM (and generated with SIDE to make thinks a lot easier):</p>
+
+<pre><code>var node =bpm_package.children[0];
+
+var destination = node.parent.parent.childByNamePath("achieved");
+
+if (node.shortType == 'YAMMA:com_bluexml_side_yamma_OutgoingMail') {
+        destination = destination.childByNamePath("mail");
+} else if (node.shortType == 'YAMMA:com_bluexml_side_yamma_Invoice') {
+        destination = destination.childByNamePath("invoice");
+} else if (node.shortType == 'YAMMA:com_bluexml_side_yamma_Quotation') {
+        destination = destination.childByNamePath("quotation");
+}
+
+node.move(destination);
+</code></pre>
+
+<p>There is an error which is very difficult to diagnose if you don't know it. The error message just tells you that there is a '}' missing at the 3rd line of your script. Well, in fact, nothing's missing! You must just type node.shortType instead of node.typeShort to make things working smoothly!</p>
+
+<p>You can try to activate the javascript debugger but it won't be very useful because once loaded, the javascript code corresponding to your transition appears on one line. So debugging step by step is not very efficient.</p>
+
+<p>What a difference with Java in which you have tools, mature and well tested, to help you to develop the code you need.</p>
+
+<p>Thanks to JPDA, it's really easy.</p>
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

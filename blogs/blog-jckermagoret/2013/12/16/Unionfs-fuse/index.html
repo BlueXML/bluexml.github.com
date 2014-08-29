@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Unionfs-fuse</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <h1>Introduction</h1>
+
+<p>I want to store content in various directories and have a unified view of them. Unionfs has been developed to achieve this need.</p>
+
+<h1>The problem</h1>
+
+<p>I work on ECM applications based on Alfresco. Custom developments are based on libs stored in WEB-INF. They are mixed with Alfresco ones which make difficult to know who did what. I can prefix them with a specific name so I will recognize them, but it is not a very convenient solution.</p>
+
+<p>Unionfs-fuse to the rescue.</p>
+
+<h1>The solution</h1>
+
+<p>Unionfs-fuse concatenates content from various directories into one. For example, imagine I have the following directories :</p>
+
+<ul>
+<li>lib-base : contains the alfresco libraries provided by the installation</li>
+<li>lib-ext : contains the alfresco libraries provided by my custom development</li>
+</ul>
+
+
+<p>Unionfs-fuse allows to have directory (lib for example) which will be the union of the other ones. Just type the following command:</p>
+
+<pre><code>unionfs-fuse lib-base=RO:lib-ext=RO lib
+</code></pre>
+
+<h2>Download</h2>
+
+<p>Get it on github with the following command:</p>
+
+<pre><code>git clone https://github.com/jonnyyu/unionfs-fuse‎
+</code></pre>
+
+<h2>Compilation</h2>
+
+<p>Go into the directory and type:</p>
+
+<pre><code>make
+</code></pre>
+
+<p>You may have 2 errors which are very easy to fix:</p>
+
+<ul>
+<li>AT_SYMLINK_NOFOLLOW</li>
+<li>malloc.h</li>
+</ul>
+
+
+<p>On OpenVZ, create the following:</p>
+
+<ul>
+<li>vzctl set CTID --devnodes fuse:rw --save</li>
+</ul>
+
+
+<h3>Bug AT_SYMLINK_NOFOLLOW</h3>
+
+<p>This bug requires you apply this [patch][Bug AT_SYMLINK_NOFOLLOW]. I always had difficulties with patch, so I prefer to apply it manually. Fortunately, the file is pretty simple.</p>
+
+<h3>Bug malloc.h</h3>
+
+<p>As indicated [here][Bug malloc.h]:</p>
+
+<pre><code>Actually, you shouldn't need malloc.h at all, it's obsolete; including stdlib.h should take care of what malloc.h used to handle. Basically, just remove it, or #if it out
+</code></pre>
+
+<h3>Finalization</h3>
+
+<p>Just type make again and that's it!</p>
+
+<h1>Ressources</h1>
+
+<ul>
+<li><a href="https://github.com/jonnyyu/unionfs-fuse%E2%80%8E">unionfs-fuse</a></li>
+<li><a href="https://blog.breadncup.com/files/fuse/0001-Patches-for-Mac-OS-X-Mountain-Lion-for-unionfs-fuse-0.26.patch">Bug AT_SYMLINK_NOFOLLOW</a></li>
+<li><a href="http://hintsforums.macworld.com/showthread.php?t=2023">Bug malloc.h</a></li>
+</ul>
+
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

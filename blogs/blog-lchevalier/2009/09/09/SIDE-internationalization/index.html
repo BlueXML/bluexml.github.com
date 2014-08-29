@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>SIDE Internationalization</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <p>Afin d'internationaliser S-IDE nous utilisons un système basé sur org.eclipse.osgi.util.NLS.</p>
+
+<h1>Fichiers de traduction</h1>
+
+<p>Les fichiers de traductions seront placés dans votre projet, ils peuvent être généré automatiquement via eclipse en faisant bouton droit sur le code source puis : Source > Externalize String (et en suivant les instructions).
+Chaque fichier de traduction pourra être décliné en autant de langue et spécificité géographique voulue (français de Belgique, Suisse, Quebec ou France par exemple).
+Par exemple pour la langue française, avec spécificité géographie à la France les fichiers possibles seront recherché dans cet ordre :</p>
+
+<ul>
+<li>messages_fr_FR.properties</li>
+<li>messages_fr.properties</li>
+<li>messages.properties</li>
+</ul>
+
+
+<p>Chaque ligne contiendra donc une clé et sa traduction :</p>
+
+<ul>
+<li>ma.cle=Mon message</li>
+</ul>
+
+
+<p>Il est également possible d'y mettre des paramètres :</p>
+
+<ul>
+<li>ma.cle2=Mon message pour {0}</li>
+</ul>
+
+
+<h1>Classe commune</h1>
+
+<p>Une classe commune située dans le module com.bluexml.side.Util.libs et nommée Messages permet de gérer les traduction; en donnant une clé il va aller chercher la traduction correspondante pour la langue (LOCALE) de l'utilisateur (dans le sens vu plus avant).</p>
+
+<h1>Utilisation</h1>
+
+<p>Cette classe doit être instanciée une fois par plug-in, pour cela dans la classe Activator de votre plugin ajouter cette ligne en la personnalisant :
+ public static final Messages Messages = new Messages(PLUGIN_ID, "com.bluexml.side.application.ui.action.messages");
+Le second argument est le path vers vos fichier de properties.</p>
+
+<p>Ensuite dans les classe de ce plugin vous pouvez appellez vos méthode ainsi :</p>
+
+<ul>
+<li><p>Sans paramètre :</p>
+
+<ul>
+<li>Activator.Messages.getString("ma.cle");</li>
+</ul>
+</li>
+<li><p>Avec un paramètre :</p>
+
+<ul>
+<li>Activator.Messages.getString("ma.cle2",MonObjet.getMonAttribut());</li>
+</ul>
+</li>
+<li><p>Avec plusieurs paramètres :</p>
+
+<ul>
+<li>Activator.Messages.getString("ma.cle3",new Object[] {MonObjet.getMonAttribut(),MonObject.getMonAutreAttribut()});</li>
+</ul>
+</li>
+</ul>
+
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

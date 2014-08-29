@@ -1,0 +1,350 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Génération de la documentation de l'application avec SIDE</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <p>Une documentation de chaque modèle de donnée S-IDE peut être générée automatiquement avec S-IDE, pour cela il faut cocher la case "Documentation" de l'onglet génération.</p>
+
+<h1>Format</h1>
+
+<p>Le format utilisé est l'<a href="http://fr.wikipedia.org/wiki/OpenDocument">Open Document</a>, notamment utilisé par OpenOffice. Un fichier lisible par Open Office est un fichier jar (nommé en .odt) contenant :</p>
+
+<ul>
+<li>/META-INF/manifest.mf</li>
+<li>/META-INF/manifest.xml</li>
+<li>content.xml</li>
+<li>meta.xml</li>
+<li>mimetype</li>
+<li>settings.xml</li>
+<li>styles.xml</li>
+</ul>
+
+
+<h1>Génération</h1>
+
+<p>La génération se fait via un générateur spécifique par méta-modèle (Class, Form, Workflow, View on en déjà un par exemple) utilisant tous une base commune (le projet com.bluexml.side.Util.generator.documentation). Ce dernier permet de générer les fichiers 'fixes' : meta.xml, mimetype, setting.xml, styles.xml. Permettant d'avoir des styles communs. Ce sont des fichiers qui bougeront peu ou de façon commune. Chaque générateur s'occupe de générer le fichier content.xml (contenant donc le texte du document, son index...).</p>
+
+<p>Une fois ces fichiers générés un jar est réalisé par le deployer de documentation (/com.bluexml.side.Deployer.documentation). Celui ci va prendre l'ensemble des fichiers générés par modèle pour en créer un jar grâce au fichier build.xml.</p>
+
+<h1>Extension pour la documentation des méta-modèles</h1>
+
+<p>Le module ''com.bluexml.side.Integration.standAlone.metamodel.documentation'' permet la génération de la documentation des meta modèles. Il permet une extension d'application afin de pouvoir être appelé en "StandAlone" lors du build de verion de S-IDE.</p>
+
+<p>Ce module doit fournir un document opendoc (openOffice) représentant la documentation des meta modèles.</p>
+
+<p>Il s'inspire très fortement des precédents générateurs de documentations (classe de génération, template). Cependant, malgré le fait que les parties statiques des templates soient identiques, aucun moyen "correct" de les mutualiser n'a été trouvé.</p>
+
+<h2>Application</h2>
+
+<p>L'application prend en entrée 2 paramètres :</p>
+
+<ol>
+<li>le chemin vers le répertoire du project eclipse contenant les meta models (* . ecore)</li>
+<li>le chemin relatif par rapport au workspace vers la target.</li>
+</ol>
+
+
+<p>Il est à noter qu'il existe un parametre supplémentaire "-data" qui doit contenir le chemin absolu vers le worskpace à utiliser.</p>
+
+<p>L'application va ouvrir le worskpace, charger en tant que modèle tous les "* . ecore" présent dans ( 1 ). Pour chacun de ces modèles,  elle va appeler la génération avec le générateur spécifiquement développé.</p>
+
+<p>Le resultat est stocké dans ( 2 )/test/doc</p>
+
+<h3>Générateur</h3>
+
+<p>Le générateur étend DocumetationGenerator mais ne reprend pas les templates communs (meta, manifest, etc..) car on ne fait pas référence ici au même metaModel que dans les templates commun.</p>
+
+<h3>Templates acceleo</h3>
+
+<p>Les templates communs ont été copiés, et pour chacune des copies seul l'import du meta Model(EMF ECORE) a été modifié.</p>
+
+<p>Concernant le content et content_chapter (template permettant de générer le contenu du modèle lu, les parties statiques sont identiques à celles d'autres content, et content chapter, seules les parties dynamiques ont été modifiés pour coincider avec le meta model ecore.</p>
+
+<p>Un service specifique a été utlisé, les fonctions natives de ecore ne permettant pas de générer la documentation aisément.</p>
+
+<h3>Service pour la generation</h3>
+
+<p>Il sagit de CustomDocumentationService.</p>
+
+<p>Les méthodes qui y sont définies sont appelées dans les templates. Il s'agit principalement de emthode eprmettant de récupérer le contenu des "noeuds" "documentations" et d'encoder les caractères spéciaux des contenus récupérés.</p>
+
+<h3>A noter</h3>
+
+<ul>
+<li>Aucun techName, techVersion etc.. n'ayant été spécifié pour le module, celui ci renseigne chacune de ces information par "test".</li>
+<li>Le temps de generation est mediocre (+1'20 par modèle) sous windows vista 32 bits edition familliale.</li>
+</ul>
+
+
+<p>Pour la documentation des méta modèle, un simple template de génération peut suffire (à voir si c'est possible de travailler avec le méta-modèle ? Au pire avec des services java on peut s'en sortir facilement. Au pire, il faut générer un fichier content.xml, donc avec un template (au sens template de présentation) ça peut également se faire (mais éviter de faire du code java avec le texte dedans comme fait actuellement, niveau maintenance c'est pas évident).</p>
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

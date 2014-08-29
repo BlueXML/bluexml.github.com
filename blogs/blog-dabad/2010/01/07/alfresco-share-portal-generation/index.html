@@ -1,0 +1,440 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Alfresco Share Portal Generation</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <h1>Portal MetaModel</h1>
+
+<p>This SIDE generator use Portal model to generate configuration files for Alfresco Share Portal.</p>
+
+<h2>Available features</h2>
+
+<p><img src="/assets/images/MMPortal-AlfrescoShare.jpg" width="750px"/></p>
+
+<h2>Scopes</h2>
+
+<p>All components are placed in the page in a "region", this region have a scope that give the place where find the component declaration :</p>
+
+<ul>
+<li>global: site-data/components/&lt; scope>.&lt; regionId>.&lt; pageId>.xml</li>
+<li>page: site-data/pages/* .xml</li>
+<li>template: site-data/template-instances/&lt; templateId>.xml</li>
+</ul>
+
+
+<h2>Sites</h2>
+
+<p>A site is generated from a Portal model element</p>
+
+<h2>Pages</h2>
+
+<h3>Share pages</h3>
+
+<p>To include an existing share page simply give the page name as page ID :</p>
+
+<ul>
+<li>documentlibrary</li>
+<li>calendar</li>
+<li>wiki-page</li>
+<li>discussions-topiclist</li>
+<li>blog-postlist</li>
+</ul>
+
+
+<h4>Scenario through SIDE: create a new page based on documentLibrary page</h4>
+
+<p>Open the portal model under SIDE portal editor, then:</p>
+
+<ul>
+<li>Load the alfresco portal model in our portal model:
+
+<ul>
+<li>If not done: Eclipse File Navigator: Import: Import SIDE Model Library: Alfresco Models X.x.y ...</li>
+<li>Load Resource...: workspace: Model-Library-Alfresco-X.x.y: portal: alfrescoSharePortal.portal</li>
+</ul>
+</li>
+<li>Drag the 'documentLibrary' page from the outline under the Additional Resources: platform:/resources/Model-Library-Alfresco-X.x.y/portal/alfrescoSharePortal.portal in your diagram</li>
+<li>Copy the page and rename it 'myNewPage'</li>
+<li>Remove from the Diagram the previously dragged 'documentLibrary' page (ATTENTION: do not remove from model).</li>
+<li>Create a portlet and give a name (for instance 'myFilter'):
+
+<ul>
+<li>Object: Portlet: Properties: ID : myFilter</li>
+</ul>
+</li>
+<li>Put the portlet on the page: Link: isOnPage</li>
+</ul>
+
+
+<p>ATTENTION: you must do the following sequence:</p>
+
+<ul>
+<li>Click on the link in red to edit its properties</li>
+<li>Click on 'Ok'</li>
+<li>Select the new link.</li>
+</ul>
+
+
+<p>In the outline you must be on the link in the form 'Have Portlet myFilter':</p>
+
+<ul>
+<li>Click on the front arrow to open it</li>
+<li>Click on 'Position Group' under the selected 'Have Portlet myFilter'</li>
+<li>In the 'onColumn' field of 'Properties' panel, click on the "..." button on the right</li>
+<li>Enter 'documentLibrary.alf-filters' in the search input field</li>
+<li>Select 'Column filter (documentlibrary.@templateBody.bd-alfresco-documentLibrary.alf-filters)'</li>
+</ul>
+
+
+<p>This indicates to place the portlet in the region 'alf-filters.filter' of the freemarket template of the page (by default, the template is the name of the page).</p>
+
+<p>As done previously on alfrescoSharePortal.portal:</p>
+
+<ul>
+<li>Load in the portal model the model 'buildInLibraryAlfresco.portal'</li>
+<li>Drag from this buildInLibraryAlfresco.portal model the portlet Type 'StaticFilter'</li>
+<li>Add the portlet Type 'StaticFilter' on the portlet 'myFilter'
+ Link: isPortalPortlet</li>
+<li>Click on the new link and enter :
+scope : template
+url : /components/staticFilter
+config : [ {id:'metadata',label:'Tous les paraphes en cours',data:  {path: '/app:company_home/st:sites/{site}/cm:documentLibrary/cm:Saisie/* ',type:'blueparapheur:paraphe_Paraphe'}  }]</li>
+</ul>
+
+
+<p>The last parameter define a filter: through SIDE, a new filter of type 'metadata' has been defined which allow for making a more complex request than default filters.</p>
+
+<p>If you want a standard components just with the url of the components (like most of those defined under site-data/webscripts/org/alfresco/components/...), drag the portlet '-scope-url' under alfrescoSharePortal.portal.</p>
+
+<h3>Custom pages</h3>
+
+<p>Managed but without layout consideration</p>
+
+<p>TODO :</p>
+
+<ul>
+<li>Manage layout</li>
+</ul>
+
+
+<h2>Components</h2>
+
+<h3>Share Components</h3>
+
+<p>Some components can be configured :</p>
+
+<ul>
+<li>documentLibrary : using a portlet associated with a complex view it's possible to select witch attribtes to display, the portlet must be have id equals to documentLibrary</li>
+<li>documentDetails : in the same way than documentLibrary use a complex view on a portlet having id equals to "documentDetails"</li>
+</ul>
+
+
+<p>TODO :</p>
+
+<ul>
+<li>Portlet with id equals to share components must be managed and included in the page</li>
+</ul>
+
+
+<h3>Generated Components</h3>
+
+<p>see [[Generated Portlets|SHARE_GENERATED_PORTLETS]]</p>
+
+<h3>SIDE Components and extended components</h3>
+
+<p>see [[SIDE Portlets|SHARE_SIDE_PORTLETS]]</p>
+
+<h2>Dashlets</h2>
+
+<h3>Generated Dashlets</h3>
+
+<p>TODO :</p>
+
+<ul>
+<li>For externals can be implemented with iframe</li>
+</ul>
+
+
+<h1>Exemple : Digitization Process</h1>
+
+<p>This example can be downloaded here :</p>
+
+<ul>
+<li>http://www.bluexml.com/svn/private/S-IDE/Extension/ApplicationExamples/trunk/DigitizationProcess</li>
+</ul>
+
+
+<h2>Replace/configure existing pages and components</h2>
+
+<p>[[image:DigitizationProcessPortal.jpg]]</p>
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

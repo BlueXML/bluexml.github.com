@@ -1,0 +1,834 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Continuous Integration Build</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <h1>General Information</h1>
+
+<p>Key access links:</p>
+
+<ul>
+<li>Source code Management SVN: svn.bluexml.com/svn/bluexml/com.</li>
+<li>Integration management Hudson: http://stager:8080</li>
+<li>Internal update-site: http://stager/share/Update-Site/SIDE-Alfresco/Ankle</li>
+<li>External update-site: http://www.bluexml.com/update-site</li>
+<li>External devel update-site: http://www.bluexml.com/update-site/SIDE/devel/</li>
+<li>Maven repository: http://stager:8081/nexus/index.html#view-repositories</li>
+</ul>
+
+
+<p>Credentials:</p>
+
+<ul>
+<li>login: build-auto</li>
+<li>password: build.auto</li>
+</ul>
+
+
+<h1>Source Code Management</h1>
+
+<p>The source code of the S-IDE projects is stored under SVN:
+* svn.bluexml.com/svn/bluexml/com.</p>
+
+<p>Access is protected by username (build-auto) and password (build.auto).</p>
+
+<p>In Eclipse, to change username and password you need to delete configuration/org.eclipse.core.runtime/.keyring</p>
+
+<p>A public access is given as update-site to download and install S-IDE Eclipse plug-in:
+* Open source update-site : http://www.bluexml.com/update-site/SIDE/SIDE-Labs/2.0.0/
+* Open source SVN : http://www.bluexml.com/svn/bluexml/SIDE-Labs/trunk/</p>
+
+<p>Credentials:</p>
+
+<ul>
+<li>login: build-auto</li>
+<li><p>password: build.auto</p>
+
+<p>  Each plugin must contain at least one java class with a main method to be correctly built.</p></li>
+</ul>
+
+
+<h1>Automatic Integration</h1>
+
+<p>Automatic integration is based on the Hudson product:</p>
+
+<ul>
+<li>https://hudson.dev.java.net/.</li>
+</ul>
+
+
+<p>Currently, a rule has been defined to build S-IDE components each night and to send emails to R&amp;D team (QA, Dev, Doc, Integration) at the end of the nightly build process.</p>
+
+<p>Hudson is installed on pipin at : https://pipin.bluexml.com/hudson/</p>
+
+<h1>Build</h1>
+
+<h2>SIDE sources checkout/update</h2>
+
+<p>Manage error recovery by saving revision number before updating.
+If error occurs, next build can recover the checked-out sources from saved revision number before updating.</p>
+
+<h2>Project versions updating</h2>
+
+<p>This step lists updated projects and compute impacted projects by changes according project dependencies. Finally update projects version and references to other projects.</p>
+
+<h3>configuration</h3>
+
+<p>All configuration is done in a properties file. This file is given as parameter when launch java application.</p>
+
+<p>Properties are:
+* Copyright and Licence:
+   - '''copyrightPath'''=/home/stager/buildAuto/copyright.txt : the path to the file that contains the text of the copyright
+   - '''copyrightURL'''=http://url.to.copyright.com : the copyright url
+   - '''licencePath'''=/home/stager/buildAuto/licence.txt : the path to the file that contains the text of the licence
+   - '''licenceURL'''=http://url.to.licence.com : the licence url
+ Version Number
+   - '''number-pattern'''=n.n.u: The pattern for the version number  incrementation. For example like 1.0.12:</p>
+
+<pre><code>    * the first one indicates a major release of S-IDE
+    * the second one a corrective package CP which contains bug fixes and minor enhancements
+    * the third one indicates patches which contains bug fixes.
+</code></pre>
+
+<p>   This pattern allows to increment(u), force(#) or do nothing(n) for each number. For instance:</p>
+
+<pre><code>    * the pattern 'n.n.u' indicates to only increment the third number to ship a patch.
+    * the pattern 'n.u.n' indicates to only increment the second number to ship a corrective package.
+    * the pattern '=.n.n' indicates to force the first number to ship a new major release with the number #:
+
+        - current version 1.0.12 and pattern 'n.n.u' #&gt; new version 1.0.13
+        - current version 1.0.12 and pattern 'n.u.u' #&gt; new version 1.1.0
+        - current version 1.0.12 and pattern 'n.u.3' #&gt; new version 1.1.3
+        - current version 1.0.12 and pattern '2.0.0' #&gt; new version 2.0.0
+</code></pre>
+
+<ul>
+<li> '''forceNumberVersion''': Is used to give a common version number to all projects. You can use a pattern (like the '''number-patern'''). Keep the property empty to disable the force.</li>
+<li> '''project''': The list of all the projects to build. Don't forget the ',\' at the end of each line. the first part is the path of the project in the repository.</li>
+</ul>
+
+
+<p>   You have to edit this list manually, every time you add or delete a project on the SVN. A sample of the S-IDE Ankle projects list is as follows :</p>
+
+<pre><code> MetaModel/Application&amp;com.bluexml.side.Application,\
+ MetaModel/Application&amp;com.bluexml.side.Application.deployer,\
+ MetaModel/Application&amp;com.bluexml.side.Application.deployer.alfresco, \
+</code></pre>
+
+<ul>
+<li> '''project.enterprise''' : Exactly same thing than '''project''' but for listing Enterprise plugins and features</li>
+</ul>
+
+
+<p>Paths properties:</p>
+
+<ul>
+<li> '''buildDir''': path to working directory (~/.hudson/jobs/Build_RCP_Community/buildAuto)</li>
+<li> '''codeName''': (Ankle)</li>
+</ul>
+
+
+<h3>Launch version updater</h3>
+
+<h2>Deploy maven project on maven repository</h2>
+
+<p>Search maven project in SIDE sources, copy projects to match maven modules layout, and do mvn deploy.</p>
+
+<h2>Package maven repository to work offline</h2>
+
+<p>Packaging includes the following steps:</p>
+
+<ul>
+<li>SIDE product embeds a maven repository so it can be used off-line,</li>
+<li>SIDE plugins are scanned to extract module dependencies,</li>
+<li>Create and build a maven project that depends of all found projects</li>
+<li>Run mvn dependency:go-offline,</li>
+<li>Archive files into a SIDE Eclipse plugin</li>
+</ul>
+
+
+<h2>SIDE product Building</h2>
+
+<p>Eclipse PDE is used to build product based on features, this step is configured by setting properties file. Finally, Eclipse PDE produces archives for supported platforms and a P2 repository that can be used as update site.
+The Builder is configured using a properties file which contains locations:</p>
+
+<ul>
+<li>'''builder''' = PDE builder working directory (${workspace}/work)</li>
+<li>'''baseLocation''' = Eclipse directory path</li>
+<li>'''deltapack''' = Eclipse deltapack path</li>
+<li>'''equinoxLauncherPluginVersion''' =1.0.101.R34x_v20081125 : Version of org.eclipse.equinox.launcher. You don't have to change this 3 parameters if you don't change the eclipse version and/or OS .</li>
+<li>'''eclipseLocation''' =/home/stager/buildAuto/eclipse : Used by the build.xml to find other build.xml</li>
+<li>'''product'''=./buildAuto.product : The path to the builAuto.product (don't change it)</li>
+<li>'''archivePrefix'''=Update-Site : the name of the Update-Site</li>
+<li>'''configs'''=linux, gtk, x86 : The list of {os, ws, arch} configurations to build. This value is a '&amp;' separated list of ',' separate triples.  For example, configs#win32,win32,x86 &amp; linux,motif,x86. For more informations, check the build.properties</li>
+<li>'''buildName'''=workingcopy : name of the working directory</li>
+<li>'''buildDir'''=/home/stager/buildAuto : Path of the working directory</li>
+<li>'''codeName'''=Ankle : Code name of the current project.</li>
+</ul>
+
+
+<h2>Copy SIDE product build and P2 update site</h2>
+
+<p>Product builds are copied into directory outside job workspace.</p>
+
+<h2>Source commit</h2>
+
+<p>If no errors occurs at this time, source changes are committed. Saved revision number from last update is deleted.</p>
+
+<h2>HUDSON STEPS</h2>
+
+<ul>
+<li>The jobs ''Build S-IDE'' has been defined under hudson; the workspace of this jobs is stored ''/root/.hudson/jobs/Build_S-IDE/workspace''.</li>
+<li>First of all, Hudons make an update on the repository under /root/.hudson/jobs/Build_S-IDE/workspace/S-IDE</li>
+<li>The script ''prepare_workspace.sh'' is called, it prepare the workspace by copying all the script from the local copy of the repository to /home/stager/buildAuto/''codeName''</li>
+<li>''Build.jar'' is runned, it make the build:
+<strong> SVN logs are analyzed (Hudson logs) to see which projects have changed
+</strong> The version number of this projects are incremented following the version number pattern
+<strong> A commit is maked to save the new version numbers
+</strong> The build of each projects is made
+<strong> The javadoc is made
+</strong> Temp folders and files are moved to the final folder</li>
+</ul>
+
+
+<h3>Meta models documentation generation step</h3>
+
+<p>The script ''meta_model_generation_genration.sh'' is called, It makes the documentation of metamodels. It takes 7 parameters :</p>
+
+<ol>
+<li>The path to hudson workspace, to retrieve up to date meta model's ecore files.</li>
+<li>The path to the plugins directory of the eclipse build that will be used for the generation.</li>
+<li>The path to to the update site last builded plugins directory, to retrieve the last builded version of the genererator.</li>
+<li>The absolute path to the workspace that will be used for the generation .</li>
+<li>The absolute path to the directory in the eclipse project in the workspace that contains metamodels file (copied from -1).</li>
+<li>The relative path (from -4)to local work directory in the workspace.</li>
+<li>The absolute path to the final target directory (where documentation as well as index.html refering to them will be copied).</li>
+</ol>
+
+
+<h3>Publishing step</h3>
+
+<p>The script ''publish_build.sh'' is called. It copies the build on the devel update site. At every step, logs are created if a problem occurs.</p>
+
+<h1>Automatic Deployment and Installation</h1>
+
+<h2>Internal update-site</h2>
+
+<p>The steps to produce and get an internal build are as follows:
+* build process</p>
+
+<pre><code>* A nightly build at 2am is automatically performed by Hudson integration management tool.
+* The build may be manually be performed by running :
+    * go to http://stager:8080/, select the job into the job list, and run an new build
+    * run (as root) java -jar Build.jar
+</code></pre>
+
+<ul>
+<li>update-site:
+
+<ul>
+<li>An update-site under apache has been set-up on the "stager" machine in the /var/www/share/SIDE/Update-Site directory. Note:
+
+<ul>
+<li>The apache web server is installed under /usr/sbin/apache2.</li>
+<li>It can be started through /etc/init.d/apache2 start|stop|restart.</li>
+<li>Its configuration is defined under /etc/apache2/apache2.conf.</li>
+<li>Logs are under /var/log/apache2.</li>
+</ul>
+</li>
+<li>The update-site address is "http://stager/share/Update-Site/SIDE-Alfresco/Ankle/".</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>External protected update-site</h2>
+
+<ul>
+<li>build is copied from the local update-site site (on stager) to www.bluexml.com:/data/www/virtuals/b/l/u/bluexml.com/www/html/static/update-site/SIDE/
+
+<ul>
+<li>A logging is required -> login and password of the internal wiki</li>
+</ul>
+</li>
+<li>the transfert is made by the script ''publish_build.sh'' (It's available on the svn into the folder ''config'' of the ''com.bluexml.side.Integration.buildHudson'' project
+
+<ul>
+<li>the script is launched by Hudson</li>
+</ul>
+</li>
+<li>The external update-site adresse is "http://www.bluexml.com/update-site/SIDE/devel/"</li>
+</ul>
+
+
+<h2>Public update-site</h2>
+
+<p>Update sites are:</p>
+
+<ul>
+<li>for SIDE-Alfresco: www.bluexml.com/SIDE-Alfresco/2.0/update-site</li>
+<li>for SIDE-Labs: http://www.side-labs.org/SIDE-Labs/2.0/update-site</li>
+<li>the update-site are on pipin.bluexml.com where the structure is always:
+
+<ul>
+<li>/var/www/pipin/html/SIDE-[Alfresco | Labs]/2.0/[ext &amp; models &amp; update-site &amp; doc &amp; upgrade &amp; package ] with :
+
+<ul>
+<li>'ext' containing framework extension war</li>
+<li>'models' containing SIDE application samples</li>
+<li>'update-site' containing the update site of the release</li>
+<li>'doc' containing the doc of the release</li>
+<li>'upgrade' containing the transformations necessary to pass models from a previous release to this release</li>
+<li>'package' containing the package like RCP which are available to download.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h1>Automatic Test</h1>
+
+<p>Test is a part of a new Job under Hudson, this Job is called ''Test_S-IDE'' and is runned at the end of ''Build_S-IDE''.</p>
+
+<p>If the previous job (Build_S-IDE) crashed, tests will not been performed.</p>
+
+<h2>Acceleo templates testing</h2>
+
+<p>To make a Product (a product is a standalone application which allows the execution of Acceleo templates) you need to have an Eclipse on windows.</p>
+
+<ol>
+<li>Select project(s) you want to run.</li>
+<li>Export -> Acceleo -> Exporter sous forme de produit indépendant de Eclipse don't use the default location, put a path and copy it. Keep the same path for the destination path.</li>
+<li>Do the same on the Eclipse in Stager if an error occur, see the log, maybe a build.properties file is missing -> copy/past the file from an other generated project.</li>
+<li>Copy the folder 'acceleo' (in the path you select below) and past it on the folder under Stager.</li>
+<li>Put the Model into the folder 'model' and modify the property 'model' on acceleo.ini</li>
+<li>Give rights for all generated files.</li>
+<li>Done !</li>
+</ol>
+
+
+<p>If you want to add new templates for a Generator (for example Class) just put it in the acceleo.ini. (the new template will be automaticaly load with the Hudson Upadte)</p>
+
+<pre><code>After the first generation, you will have to change manually the acceleo.ini if a template is added/deleted/modified.
+</code></pre>
+
+<h2>SIDE Deployer and Generator testing</h2>
+
+<p>The goal is to automatically test SIDE generators and deployers by providing an application model describing a specific generation path; this implies to use the Eclipse environment without launching Eclipse.</p>
+
+<h3>Create a standalone plugin:</h3>
+
+<ul>
+<li>Implement ''IApplication'' on the class you want to make runnable without launching Eclipse. Then, You have to implement 2 methods ''start'' and ''stop'':
+
+<ul>
+<li>''start'' is the same as the ''main'' class. This class must return an Object (''EXIT_OK'' on success and ''EXIT_ERROR'' on error)</li>
+<li>''stop'' keep it blank.</li>
+</ul>
+</li>
+</ul>
+
+
+<p>Now, you have to edit (with eclipse is easier) the MANIFEST.MF file and to give an ''ID'' to your plugin: this ''ID'' will be used during plugin launch step as '''PLUGIN_ID'''.</p>
+
+<p>In the MANIFEST file, the ''Extensions'' tab must be configured:</p>
+
+<ul>
+<li>Add a new extention
+
+<ul>
+<li>Select ''org.eclipse.core.runtime.applications'' as the extension points</li>
+<li>Put an Explicit ID to the ''org.eclipse.core.runtime.applications'' refered as '''APPLICATION_ID'''</li>
+<li>On the sub class ''application'', put all the option blank (''visible'', ''cardinality'' and ''thread'')</li>
+<li>Do a right click on the sub class ''application'' -> new -> run</li>
+<li>And now, select the class you want to launch</li>
+</ul>
+</li>
+<li><p>Done!</p></li>
+<li><p>For SIDE, we directly work on an application model which contains a list of models and generators/deployers to test; the corresponding standalone plugin is: '''com.bluexml.side.Integration.standAlone project'''</p></li>
+</ul>
+
+
+<p>This plugin has 2 classes: '''Application''' and '''Generate''':</p>
+
+<ul>
+<li>'''Application''' is the main class with a ''start'' method which call the methods of ''Generate'' class.
+*''Generate'' is similar to com.bluexml.side.application.ui.action.utils.Generate class without the IHM.
+
+<ul>
+<li> The ''Generate'' construtor has now the ''.application'' model file as parameters and extracts the generation options
+** Then, run() is called, and executes the generation process.</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Export the standalone plugin</h3>
+
+<p>Export it into a jar file:</p>
+
+<ul>
+<li>On the standalone plugin, do a right click on it and select ''export'' -> Java ->  JAR file.</li>
+<li>Select the MANIFEST.MF file that you made bellow and export the standalone plugin into the ''plugins'' folder of your Eclipse.</li>
+</ul>
+
+
+<h3>Launch the standalone plugin</h3>
+
+<p>Launch it using the ''org.eclipse.equinox.launcher_1.0.101.R34x_v20081125.jar'' (the version number may change depending on your Eclipse version):</p>
+
+<p>To launch a standalone plugin with Eclipse, type the following line in a terminal:</p>
+
+<pre><code>java -jar "path/to/eclipse/plugins/org.eclipse.equinox.launcher_1.0.101.R34x_v20081125.jar" -application '''PLUGIN_ID'''.'''APPLICATION_ID''' -data "path/to/the/workspace"
+</code></pre>
+
+<p>To launch SIDE, type:</p>
+
+<pre><code>java -jar "path/to/eclipse/plugins/org.eclipse.equinox.launcher_1.0.101.R34x_v20081125.jar" -application com.bluexml.side.Integration.standAlone.application -data "path/to/the/workspace" myApplication.application
+</code></pre>
+
+<p>For example:</p>
+
+<pre><code>java -jar "C:/eclipse-3.4.2-a-jour/eclipse-3.4.2-a-jour/eclipse/plugins/org.eclipse.equinox.launcher_1.0.101.R34x_v20081125.jar" -application com.bluexml.side.Integration.standAlone.application -data "C:/workspaceStandAlone" myApplication.application
+</code></pre>
+
+<h1>Misc</h1>
+
+<h2>Packaging &amp; Shipping</h2>
+
+<p>Installer
+Public update-site</p>
+
+<h2>Useful  Applications</h2>
+
+<h3>CleanEclipse</h3>
+
+<ul>
+<li>You can find the CleanEclipse.jar on the [http://www.bluexml.com/update-site/SIDE/SIDE-Labs/2.0.0/ Open Source Update-Site]</li>
+<li>Or Directly the project on the SVN ''com.bluexml.side.Integration.cleanEclipse''</li>
+</ul>
+
+
+<p>This jar Clean the Eclipse of a plugin installation. For example, you may have an error during the installation of SIDE via the Update-Site if you already have an SIDE installation on your Eclipse and the Update-site has changed.</p>
+
+<p>To correct this:</p>
+
+<ul>
+<li>On eclipse, go to ''Help''->''Software Updates''->''Installed Software'' and ''Uninstall'' all SIDE plugins</li>
+<li>Then, open a terminal and do this:
+java -jar CleanEclipse.jar ''path/to/your/eclipse''</li>
+<li>This will clean Eclipse from SIDE installation</li>
+</ul>
+
+
+<p>You can use this application to clean other project, for example, you wants to clean eclipse of ''Acceleo'' installation, do this:
+* Uninstall acceleo plugins of your eclipse
+* Then, open a terminal and do this:</p>
+
+<pre><code>java -jar CleanEclipse.jar "path/to/your/eclipse acceleo"
+</code></pre>
+
+<p>For the project name, the application is not case sensitive.</p>
+
+<h3>Open Source Publication</h3>
+
+<ul>
+<li>You can find this project on the SVN ''com.bluexml.side.Integration.openSourcePublication''</li>
+</ul>
+
+
+<h4>License text</h4>
+
+<p>This project has in input the path to a folder (for example a copy of the SVN) and the project with, at the beginning of each file, a license text.</p>
+
+<p>The license text is part of the project and is named ''LICENSE-notices''</p>
+
+<p>comment.properties has this form:</p>
+
+<pre><code>java#multi,/*,*/
+xml#multi,&lt;!--,--&gt;
+properties#mono,#
+mt#multi,&lt;%--,--%&gt;
+</code></pre>
+
+<p>These properties give the right comment tag for each type of file. For example :</p>
+
+<pre><code>java#multi,/*,*/  -&gt; /*
+                     License
+                     text
+                       */
+
+ properties#mono,# -&gt; #License
+                       #text
+</code></pre>
+
+<p>Where:</p>
+
+<ul>
+<li>multi: the comment tag is multi-line like xml or java</li>
+<li>mono: the comment tag is for each line, like properties files</li>
+</ul>
+
+
+<h4>Open Source Publication Steps</h4>
+
+<p>The different publication steps for the open source SIDE projects are:</p>
+
+<ol>
+<li>The projects are checkout from the svn http://www.bluexml.com/svn/private/S-IDE/</li>
+<li>All the folder ".svn" are delete from the chekout projects.</li>
+<li>Licenses are add in every file of the checkout projects.</li>
+<li>The security project is deleted and every reference to it are deleted too.</li>
+<li>In the open source svn http://www.bluexml.com/svn/bluexml/SIDE-Labs/trunk/, every project are deleted except the folder called "README"</li>
+<li>The new S-IDE projects are committed into the Open source svn.</li>
+</ol>
+
+
+<p>Step 1 to 4 are done by the hudson job called Build_SIDE_Labs. The new S-IDE source can be found at pipin in /var/opt/hudson/jobs/Build_SIDE_Labs/buildAuto/Ankle/repositoryCopy.</p>
+
+<h1>Maven deploy</h1>
+
+<h2>Configuring Hudson</h2>
+
+<p>In Manage hudson / Configure System, in the maven part set the following values:</p>
+
+<ul>
+<li>name: maven2</li>
+<li>MAVEN_HOME: /usr/share/maven2</li>
+</ul>
+
+
+<h2>Maven Job</h2>
+
+<p>The hudson's job called "superpom" check in the svn if there is update of the project "superpom". The project "superpom" will be copied in /root/.hudson/jobs/superpom/workspace/.</p>
+
+<p>The maven deploy job is included in the hudon's job called "Build_S-IDE".</p>
+
+<p>This is the script for maven deploy:</p>
+
+<pre><code>cp /home/stager/buildAuto/Ankle/delete_folder.pl /home/stager/buildAuto/Ankle/maven_workspace
+cd /home/stager/buildAuto/Ankle/maven_workspace
+perl delete_folder.pl pom.xml
+cp /root/.hudson/jobs/superpom/workspace/superpom/pom.xml .
+perl -pi -le 'print "&lt;modules&gt;" if $. ## 12' pom.xml
+perl -pi -le 'print "&lt;/modules&gt;" if $. ## 13' pom.xml
+for s in `ls -d */ `; do
+    repertoire#$s
+    name#`expr match "$repertoire" '\([a-zA-Z0-9.]*\)'`
+    res#"&lt;module&gt;$name&lt;/module&gt;"
+     perl -pi -le 'print "'$res'" if $. ## 13' pom.xml
+ done
+mvn clean deploy -e -P lan
+rm -rf /home/stager/buildAuto/Ankle/maven_workspace
+</code></pre>
+
+<p>The folder "maven_workspace" is used for the maven job.</p>
+
+<p>Explanations:</p>
+
+<ul>
+<li>line 1: a perl script is copied into the folder maven_workspace.</li>
+<li>line 3: the perl script delete the folder which don't include a file "pom.xml".</li>
+<li>line 4: the file pom.xml of the project "superpom" is copied into the folder maven_workspace.</li>
+<li>line 5 and 6: the tags "<modules>" and </modules> are added into the file pom.xml.</li>
+<li>line 7 to 12: each name folder includes in the folder maven_workspace are added as module in the file pom.xml.</li>
+<li>line 13: launch the maven deploy.</li>
+<li>line 14: delete the folder maven_workspace.</li>
+</ul>
+
+
+<h2>Error</h2>
+
+<p> org.apache.maven.lifecycle.LifecycleExecutionException: Error deploying artifact: Resource to deploy not found: File: http://192.168.49.18:8081/nexus/content/repositories/SIDE-lan-releases/org/bluexml/superpom/1.8/superpom-1.8.pom does not exist
+  at org.apache.maven.lifecycle.DefaultLifecycleExecutor.executeGoals(DefaultLifecycleExecutor.java:583)
+  at org.apache.maven.lifecycle.DefaultLifecycleExecutor.executeGoalWithLifecycle(DefaultLifecycleExecutor.java:499)
+  at org.apache.maven.lifecycle.DefaultLifecycleExecutor.executeGoal(DefaultLifecycleExecutor.java:478)
+  at org.apache.maven.lifecycle.DefaultLifecycleExecutor.executeGoalAndHandleFailures(DefaultLifecycleExecutor.java:330)
+  at org.apache.maven.lifecycle.DefaultLifecycleExecutor.executeTaskSegments(DefaultLifecycleExecutor.java:291)
+  at org.apache.maven.lifecycle.DefaultLifecycleExecutor.execute(DefaultLifecycleExecutor.java:142)
+  at org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:336)
+  at org.apache.maven.DefaultMaven.execute(DefaultMaven.java:129)
+  at org.apache.maven.cli.MavenCli.main(MavenCli.java:287)
+  at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+  at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+  at java.lang.reflect.Method.invoke(Method.java:585)
+  at org.codehaus.classworlds.Launcher.launchEnhanced(Launcher.java:315)
+  at org.codehaus.classworlds.Launcher.launch(Launcher.java:255)
+  at org.codehaus.classworlds.Launcher.mainWithExitCode(Launcher.java:430)
+  at org.codehaus.classworlds.Launcher.main(Launcher.java:375)
+ Caused by: org.apache.maven.plugin.MojoExecutionException: Error deploying artifact: Resource to deploy not found: File: http://192.168.49.18:8081/nexus/content/repositories/SIDE-lan-releases/org/bluexml/superpom/1.8/superpom-1.8.pom does not exist</p>
+
+<p>This error occurs when the repertory name has changed. We need to check if the file pom.xml in the project "superpom" has being changed.</p>
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

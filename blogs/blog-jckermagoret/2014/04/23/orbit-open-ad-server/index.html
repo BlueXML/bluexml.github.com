@@ -1,0 +1,344 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Orbit Open Ad Server Installation</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <h1>Introduction</h1>
+
+<p>This software may be downloaded on [OrbitScripts].</p>
+
+<h1>Installation</h1>
+
+<ul>
+<li>Read readme.txt in the main installation directory.</li>
+<li>Install PDO sqlite, SimpleXML...</li>
+<li>If you use a recent php installation (for example php 5.3 or 5.4), you may encounter the following warnings:
+
+<ul>
+<li>disable disable_functions</li>
+<li>mysql_escape_string => must be replace by mysql_real_escape_string</li>
+</ul>
+</li>
+<li>Enable mod_rewrite</li>
+<li>Allow .htaccess</li>
+</ul>
+
+
+<h2>disable disable_functions</h2>
+
+<p>In /etc/php5/apache2/php.ini, find disable_functions and set it to nothing:</p>
+
+<pre><code>disable_functions =
+</code></pre>
+
+<h2>mysql_escape_string</h2>
+
+<p>Just replace mysql_escape_string with mysql_real_escape_string:</p>
+
+<pre><code>replace "mysql_escape_string" "mysql_real_escape_string" -- system/database/drivers/mysqli/mysqli_driver.php
+replace "mysql_escape_string" "mysql_real_escape_string" -- system/database/drivers/zend/zend_driver.php
+replace "mysql_escape_string" "mysql_real_escape_string" -- system/database/drivers/mysql/mysql_driver.php
+</code></pre>
+
+<p>Other warnings may be ignored</p>
+
+<h2>enable mod_rewrite</h2>
+
+<p>a2enmod rewrite</p>
+
+<h2>enable .htaccess</h2>
+
+<p>If you have an error about file that doesn't exist when trying to access http://.../openadserver/, it simply means the .htaccess doesn't work. To fix this problem, in /etc/apache2/sites-enabled/000-default, just add AllowOverride All to the main Directory entry:</p>
+
+<pre><code>&lt;Directory /var/www/&gt;
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride All
+    Order allow,deny
+    allow from all
+&lt;/Directory&gt;
+</code></pre>
+
+<h1>Conclusion</h1>
+
+<p>just reload apache2 configuration with:</p>
+
+<pre><code>service apache2 reload
+</code></pre>
+
+<h1>Ressources</h1>
+
+<ul>
+<li><a href="http://orbitscripts.com/">OrbitScripts</a></li>
+</ul>
+
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

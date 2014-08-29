@@ -1,0 +1,417 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Alfresco "document-details" Page Customization</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <p>The document-details page is defined in the page directory located $TOMCAT/webapps/share/WEB-INF/classes/alfresco/site-data/pages/document-details.xml:</p>
+
+<pre><code>&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;page&gt;
+   &lt;title&gt;Document Details&lt;/title&gt;
+   &lt;title-id&gt;page.documentDetails.title&lt;/title-id&gt;
+   &lt;description&gt;Document details&lt;/description&gt;
+   &lt;description-id&gt;page.documentDetails.description&lt;/description-id&gt;
+   &lt;template-instance&gt;document-details&lt;/template-instance&gt;
+   &lt;authentication&gt;user&lt;/authentication&gt;
+&lt;/page&gt;
+</code></pre>
+
+<p>This page uses the document-details template as indicated, located at $TOMCAT/webapps/share/WEB-INF/classes/alfresco/site-data/template-instances/document-details.xml</p>
+
+<pre><code>&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;template-instance&gt;
+   &lt;template-type&gt;org/alfresco/document-details&lt;/template-type&gt;
+   &lt;properties&gt;
+      &lt;pageFamily&gt;documentlibrary&lt;/pageFamily&gt;
+      &lt;container&gt;documentLibrary&lt;/container&gt;
+   &lt;/properties&gt;
+&lt;/template-instance&gt;
+</code></pre>
+
+<p>The document-details page is the result of the aggregation of the (take a deep breath :-) $TOMCAT/webapps/share/WEB-INF/classes/alfresco/templates/org/alfresco/document-details.ftl which looks like this for its most important part:</p>
+
+<pre><code>&lt;div&gt;
+    &lt;div&gt;
+        &lt;@region id=doclibType + "document-metadata-header" scope="template" protected=true /&gt;
+        &lt;@region id=doclibType + "document-metadata" scope="template" protected=true /&gt;
+        &lt;@region id=doclibType + "document-info" scope="template" protected=true /&gt;
+        &lt;@region id=doclibType + "document-versions" scope="template" protected=true /&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;@region id=doclibType + "document-actions" scope="template" protected=true /&gt;
+        &lt;@region id=doclibType + "document-links" scope="template" protected=true /&gt;
+        &lt;#if doclibType?starts_with("dod5015")&gt;
+            &lt;@region id=doclibType + "document-references" scope="template" protected=true /&gt;
+        &lt;/#if&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>The only part a little strange is that the core of this page, consisting of the metadata is not processed the same way, which would make customization a lot easier. Instead of that, they use the form component to render the document metadata. Maybe to provide inline update later, but for the moment, I just want to render my metadata and I prefer to have a consistent way to do this.</p>
+
+<p>So, I replaced the:</p>
+
+<pre><code>&lt;@region id=doclibType + "document-metadata" scope="template" protected=true /&gt;
+</code></pre>
+
+<p>by:</p>
+
+<pre><code>&lt;@region id=doclibType + "document-metadata-core" scope="template" protected=true /&gt;
+</code></pre>
+
+<p>and then defined the corresponding template, webscript and component.</p>
+
+<p>First, indicate the component to use when the document-metadata-core region is used from the document-details template. This happens in $TOMCAT/share/WEB-INF/classes/alfresco/site-data/components/template.document-metadata-core.document-details.xml:</p>
+
+<pre><code>&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;component&gt;
+   &lt;scope&gt;template&lt;/scope&gt;
+   &lt;region-id&gt;document-metadata-core&lt;/region-id&gt;
+   &lt;source-id&gt;document-details&lt;/source-id&gt;
+   &lt;url&gt;/components/document-details/document-metadata-core&lt;/url&gt;
+&lt;/component&gt;
+</code></pre>
+
+<p>Second, define $TOMCAT/webapps/share/WEB-INF/classes/alfresco/site-webscripts/org/alfresco/components/document-details/document-metadata-core.get.(desc|head|html).xml files with the following content: 2.1: document-metadata-core.get.desc.html:</p>
+
+<pre><code>&lt;webscript&gt;
+  &lt;shortname&gt;document-metadata-core&lt;/shortname&gt;
+  &lt;description&gt;Document Metadata Core Component&lt;/description&gt;
+  &lt;url&gt;/components/document-details/document-metadata-core&lt;/url&gt;
+&lt;/webscript&gt;
+</code></pre>
+
+<h2>document-metadata-core.get.head.html:</h2>
+
+<pre><code>&lt;#include "../component.head.inc"&gt;
+&lt;!-- Document Metadata Header --&gt;
+&lt;@link rel="stylesheet" type="text/css" href="${page.url.context}/components/document-details/document-metadata-core.css" /&gt;
+&lt;@script type="text/javascript" src="${page.url.context}/components/document-details/document-metadata-core.js"&gt;&lt;/@script&gt;
+</code></pre>
+
+<h2>document-metadata-core.get.html:</h2>
+
+<pre><code>&lt;script type="text/javascript"&gt;//&lt;![CDATA[
+   new Alfresco.DocumentMetadataCore("${args.htmlid}").setMessages(${messages});
+//]]&gt;&lt;/script&gt;
+&lt;div id="metadata-core"&gt;
+   &lt;div&gt;${msg("document-metadata-core.heading")}&lt;/div&gt;
+   &lt;h1&gt;&gt;Woooh, juste un peu de texte :-)&lt;/h1&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>Lastly, we define $TOMCAT/webapps/share/components/document-details/document-metadata-core.js which will be compressed in document-metadata-core-min.js later:</p>
+
+<pre><code>/**
+ * Document metadata-core component.
+ *
+ * @namespace Alfresco
+ * @class Alfresco.DocumentMetadataCore
+ */
+(function()
+{
+   var Dom = YAHOO.util.Dom;
+   var $html = Alfresco.util.encodeHTML;
+
+   /**
+    * DocumentMetadataCore constructor.
+    *
+    * @param {String} htmlId The HTML id of the parent element
+    * @return {Alfresco.DocumentMetadataCore} The new DocumentMetadataCore instance
+    * @constructor
+    */
+   Alfresco.DocumentMetadataCore = function(htmlId)
+   {
+      Alfresco.DocumentMetadataCore.superclass.constructor.call(this, "Alfresco.DocumentMetadataCore", htmlId);*/
+
+      /* Decoupled event listeners */
+      YAHOO.Bubbling.on("documentDetailsAvailable", this.onDocumentDetailsAvailable, this);
+
+      return this;
+   };
+
+   YAHOO.extend(Alfresco.DocumentMetadataCore, Alfresco.component.Base,
+   {
+      onDocumentDetailsAvailable: function DocumentMetadataCore_onDocumentDetailsAvailable(layer, args)
+      {
+      // Just write your code there
+      }
+   });
+})();
+</code></pre>
+
+<p>Through the use of bubbling (kind of Observer pattern), the document-details page updates when the "documentDetailsAvailable" event fires and the method above is played thanks to the following line:</p>
+
+<pre><code>YAHOO.Bubbling.on("documentDetailsAvailable", this.onDocumentDetailsAvailable, this);
+</code></pre>
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

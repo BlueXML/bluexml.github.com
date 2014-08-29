@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Ecrire un plugin pour Confluence</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <h1>Introduction</h1>
+
+<p>Cette page explique comment écrire un plugin pour Atlassian.</p>
+
+<h1>Configuration de l'environnement</h1>
+
+<h2>Adaptation de l'IDE</h2>
+
+<p>L'IDE a été téléchargé et configuré en suivant les instructions sur [cette page][ide-for-linux/mac] sur le site d'Atlassian.</p>
+
+<p>Pour configurer la jre 1.6.0 sur mon Mac, j'ai ajouté la définition de la 1.6.0 stockée dans le répertoire suivant :</p>
+
+<ul>
+<li>/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home</li>
+</ul>
+
+
+<p>Comme expliqué dans les commentaires, pour installer maven, indiquer le site suivant comme source pour Juno :</p>
+
+<ul>
+<li>http://download.eclipse.org/releases/juno</li>
+</ul>
+
+
+<p>En effet, le site indiqué sur JIRA ne contient les références pour un plugin utile à maven et l'installation n'est alors pas possible.</p>
+
+<h2>Installation du SDK</h2>
+
+<p>L'installation consiste simplement à le télécharger et l'installer. Une fois installée, vous pouvez alors lancer JIRA en mode développement avec la commande suivante :</p>
+
+<pre><code>atlas-run-standalone --product jira
+</code></pre>
+
+<p>Le système charge alors les modules et exécutables manquants nécessaires. Tomcat est alors démarré, il faut être patient : le premier lancement a mis 744s sur mon MacBook Pro avec 8 Go de RAM.</p>
+
+<h1>Vidéo</h1>
+
+<h1>Resources</h1>
+
+<p>[ide for linux/mac] https://developer.atlassian.com/display/DOCS/Set+Up+the+Eclipse+IDE+for+Linux</p>
+
+<p>[2] https://developer.atlassian.com/display/DOCS/Set+up+the+Atlassian+Plugin+SDK+and+Build+a+Project</p>
+
+<p>https://developer.atlassian.com/display/CONFDEV/Macro+Module
+https://developer.atlassian.com/display/CONFDEV/XWork-WebWork+Module
+https://developer.atlassian.com/display/CONFDEV/WoW+Macro+explanation
+[3] https://developer.atlassian.com/display/CONFDEV/Write+a+simple+Confluence+Blueprint+plugin</p>
+
+<p>[4] https://developer.atlassian.com/display/CONFDEV/Writing+Confluence+Plugins</p>
+
+<p>https://developer.atlassian.com/display/DOCS/Put+the+Final+Polish+on+the+Project+in+Eclipse</p>
+
+<p>https://developer.atlassian.com/display/DOCS/Plugin+Modules</p>
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

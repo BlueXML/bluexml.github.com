@@ -1,0 +1,24 @@
+
+# Présentation de la société BlueXML
+
+	@stage-preambule.md
+	@presentation.md
+	@stage-k.md
+
+#!@2014-01-28-stage-dev.md
+#!@2014-01-28-stage-admin.md
+#!@2014-01-28-stage-communication.md
+@2014-01-28-stage-marketing.md
+
+# Informations complémentaires
+
+	@stage-encadrement.md
+	@stage-blog.md
+	@stage-contact.md
+
+# A bientôt !
+
+En espérant vous rencontrer bientôt,
+
+Jean-Christophe KERMAGORET
+Directeur associé

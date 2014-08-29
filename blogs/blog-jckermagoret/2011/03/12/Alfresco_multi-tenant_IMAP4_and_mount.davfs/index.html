@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Alfresco multi tenant IMAP4 and mount.davfs</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <h1>Use Case</h1>
+
+<p>In a multi-tenant Alfresco, I want to be able to use IMAP4, which is not supported in this situation, except for the host (the main tenant).</p>
+
+<p>A work around consists in mounting other tenants through webdav to be able to copy content from one tenant to another, and then to extract meta-data through a content rule. This feature sounds like the replicate one which is unfortunately unavailable on multi-tenant systems.</p>
+
+<h1>Summary</h1>
+
+<p>The Alfresco host server acts like the main tenant which receives mails for other tenants then, through webdav, copied them to other tenants.</p>
+
+<p>In very short, Replicate = WebDAV + Content Rule</p>
+
+<h1>Solution</h1>
+
+<p>The solution is based on mount.davfs.</p>
+
+<p>You can install it through the davfs debian package. Just do:</p>
+
+<pre><code>apt-get install davfs
+</code></pre>
+
+<h1>Mount.davfs Configuration</h1>
+
+<p>You then need to edit:</p>
+
+<ul>
+<li>/etc/davfs/secrets, to indicate for each mount point the user and passwd to use</li>
+<li>/etc/davfs/certs/yourserver.pem, to indicate the certificate for your alfresco webdav server, using SSL</li>
+</ul>
+
+
+<p>My /etc/davfs/secrets file contains the following:</p>
+
+<pre><code>/mnt/davfs/test2-admin admin@test2 xxxx
+/mnt/davfs/test1-admin admin@test1 xxxx
+/mnt/davfs/demo2-admin admin@demo2 xxxx
+/mnt/davfs/demo1-admin admin@demo1 xxxx
+/mnt/davfs/main-admin admin xxxx
+</code></pre>
+
+<p>where xxxx must be replaced by your password for each tenant. You can of course make some mountings with other user accounts than the admin one.</p>
+
+<p>You can then mount your webdav server on your mount point. For example:</p>
+
+<pre><code>mount -t davfs https://your.alfresco.server/alfresco/webdav /mnt/davfs/main-admin
+</code></pre>
+
+<p>where /mnt/davfs/main-admin is a directory you created before the mount command</p>
+
+<p>You can then use your remote alfresco server like any usual file systems and copies the data.</p>
+
+<p>For example, I do:</p>
+
+<pre><code>cp -rf /mnt/davfs/main-admin/Imap\ Home/admin/INBOX/Alfresco/* /mnt/davfs/test1-admin/Sites/test1/documentLibrary/test/Alfresco
+</code></pre>
+
+<h1>Meta-data Extraction Through Content Rule</h1>
+
+<p>E-mails are now available in my tenant, but they aren't seen like emails. So, I need to extract the meta-data corresponding to e-mails. To achieve that, I just have to create a content rule which will be triggered on new elements. This content rule will extract common meta-data from freshly copied emails.</p>
+
+<h1>Conclusion</h1>
+
+<p>It's a little hacky but it does the job!!!</p>
+
+<h1>Resources</h1>
+
+<ul>
+<li>http://linux.die.net/man/8/mount.davfs</li>
+<li>http://www.linuxquestions.org/questions/linux-software-2/force-accept-certificates-when-using-mount-davfs-632056/ to automatically accept certificates when mounting the WebDAV resource with SSL</li>
+</ul>
+
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

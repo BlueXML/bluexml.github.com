@@ -1,0 +1,506 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Blog de David Abad</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        
+
+<div style="float: right">
+	<img src="images/dabad.png" width="200px"/>
+</div>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-dabad/2012/03/06/share-folder-contains">Share Folder Constraints</a></h3>
+		<p class="meta">Date: Tue Mar 06 00:00:00 +0100 2012</p>
+		<div class="entry">
+			This page explains how to define a custom folder, and add the capability on create Forms to upload child for this new folder. SIDE Project Use the New Project wizard to create a new SIDE project, choose alfresco-3.4.6 DataModel Extends from cm:Folder Create your custom Folder 'MyFolder' Import alfresco content model Add generalization from 'MyFolder' to cm:Folder On 'MyFolder' add metainfo single-child value=true, this enable a policy that 'move' new children from the tmp folder to 'MyFolder' Forms Models Initialize models Right click on SIDE project Clock on Initialize (or select your application model) Create popup.form This form model aims...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-dabad/2012/03/01/share-data-list">Share Data List</a></h3>
+		<p class="meta">Date: Thu Mar 01 00:00:00 +0100 2012</p>
+		<div class="entry">
+			This page explains : How to customize alfresco share DataListItem and use them as selectable value in custom class. How to define DocumentLibrary Filter on such DataList. DataModel Extends from DataListItem Create a new Class "MyDataList" Load Alfresco cm:content.dt model Drag'n drop DataListItem Class into your diagram Add generalization link from "MyDataList" to "DataListItem" Add Association to DataListItem Create a new Class "MyDocument" Add association to "MyDataList" Select the association and in option, set "searchable" to true Configure Forms to use DataList Use initialize action on project, this creates all defaults models. DataListItem Forms No special changes are required, but...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-dabad/2012/02/16/share-forms-association">Share Forms Associations</a></h3>
+		<p class="meta">Date: Thu Feb 16 00:00:00 +0100 2012</p>
+		<div class="entry">
+			Simple Select This widget is used if you choice "Select" as widget, you can also set template metainfo value=/side/controls/association-select.ftl Metainfo options Available option are (use metainfo to set them): searchInSite [true|false]: default value "true", enable/disable filter available items on current site. itemType [&lt; prefixedQName>]: default value is set to association endPoint, can be used to select a subtype. multipleSelectMode [true|false]: default value is set according to endPoint. so you can force a multiple endePoint to false so only one item can be selected, but the other alternative (single endPoint forced to multiple) will implies runtime exception filterTerm [String, ]: default...
+		</div>
+	</div>
+  
+
+  
+
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-dabad/2011/07/05/side-reverse-for-Alfresco">SIDE Reverse for Alfresco</a></h3>
+		<p class="meta">Date: Tue Jul 05 00:00:00 +0200 2011</p>
+		<div class="entry">
+			Presentation The purpose of reverse is to read some Alfresco configuration files and produce resulting SIDE models. With such models, it's then possible to extend and use existing alfresco objects into custom SIDE models. Technical 100% Java Reading XML alfresco files using xsd schema, JAXB code generation Writing SIDE models using Ecore API (so all serialization details are ignored) Algorithmic Sorting XML files according to their dependencies, so we can read them without trouble (ie missing references) Optionally load in registry existing SIDE models (already reversed alfresco native models for example) Read Alfresco files according to computed order For each...
+		</div>
+	</div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-dabad/2011/03/07/alfresco-share-form-generation">Alfresco Share Forms Generation</a></h3>
+		<p class="meta">Date: Mon Mar 07 00:00:00 +0100 2011</p>
+		<div class="entry">
+			This is done by generating a xml file following form-config-3.3.xsd schema, and extends springs context to enable share to load the generated files. Integration How SIDE set Share to use a form definition for specific application part ? Alfresco Share search configuration that match with the data type (condition#"&lt; Qname>") the form share components use default forms (without @id) unless the formid parameter is set SIDE use Form model with Class Form Collection named "default" to generate default forms configuration, other generated models have a @id with value equals to the Class Form Collection name SIDE use Portal model to...
+		</div>
+	</div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-dabad/2010/09/13/side-ant-builder">SIDE Process Customization</a></h3>
+		<p class="meta">Date: Mon Sep 13 00:00:00 +0200 2010</p>
+		<div class="entry">
+			Introduction The main SIDE process can be described as following : Models validation (optional) Clean generation folder (optional) Run all selected generators Run all selected deployers Generate a report But users may have something to customize in this process to fit his needs. For examples : User may want to add some packages in right folder before deployment. Start or stop some process before or after deployment (stop alfresco before deployment, and start it after deployment) Override some generated files with his owns. We can imagine many use case where user need to customize SIDE process. To response to these...
+		</div>
+	</div>
+  
+
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-dabad/2010/06/03/continuous-integration-setup">Continuous Integration Build</a></h3>
+		<p class="meta">Date: Thu Jun 03 00:00:00 +0200 2010</p>
+		<div class="entry">
+			General Information Key access links: Source code Management SVN: svn.bluexml.com/svn/bluexml/com. Integration management Hudson: http://stager:8080 Internal update-site: http://stager/share/Update-Site/SIDE-Alfresco/Ankle External update-site: http://www.bluexml.com/update-site External devel update-site: http://www.bluexml.com/update-site/SIDE/devel/ Maven repository: http://stager:8081/nexus/index.html#view-repositories Credentials: login: build-auto password: build.auto Source Code Management The source code of the S-IDE projects is stored under SVN: * svn.bluexml.com/svn/bluexml/com. Access is protected by username (build-auto) and password (build.auto). In Eclipse, to change username and password you need to delete configuration/org.eclipse.core.runtime/.keyring A public access is given as update-site to download and install S-IDE Eclipse plug-in: * Open source update-site : http://www.bluexml.com/update-site/SIDE/SIDE-Labs/2.0.0/ * Open source SVN : http://www.bluexml.com/svn/bluexml/SIDE-Labs/trunk/ Credentials: login: build-auto password: build.auto...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-dabad/2010/03/02/side-product">How To make an "RCP" Eclipse based</a></h3>
+		<p class="meta">Date: Tue Mar 02 00:00:00 +0100 2010</p>
+		<div class="entry">
+			Goal Includes your custom plug-ins in a minimal Eclipse based product Add capability to update your plug-ins from an update site Make RCP for windows, linux and Mac in headless mode. The product Eclipse PDE can use an .product file to build a complete custom RCP. This file define plug-ins to includes and some configuration like splash screen application icons and more. So create new plug-in project to define branding elements. Create a .product file : * Select in product definition the plug-in that include this product * Select the application to use (default Eclipse is org.eclipse.ui.ide.workbench) * Select 'The...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-dabad/2010/01/07/alfresco-share-portal-generation">Alfresco Share Portal Generation</a></h3>
+		<p class="meta">Date: Thu Jan 07 00:00:00 +0100 2010</p>
+		<div class="entry">
+			Portal MetaModel This SIDE generator use Portal model to generate configuration files for Alfresco Share Portal. Available features Scopes All components are placed in the page in a "region", this region have a scope that give the place where find the component declaration : global: site-data/components/&lt; scope>.&lt; regionId>.&lt; pageId>.xml page: site-data/pages/* .xml template: site-data/template-instances/&lt; templateId>.xml Sites A site is generated from a Portal model element Pages Share pages To include an existing share page simply give the page name as page ID : documentlibrary calendar wiki-page discussions-topiclist blog-postlist Scenario through SIDE: create a new page based on documentLibrary page Open...
+		</div>
+	</div>
+  
+
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-dabad/2009/09/15/side-installation">Eclipse Installation</a></h3>
+		<p class="meta">Date: Tue Sep 15 00:00:00 +0200 2009</p>
+		<div class="entry">
+			Download Eclipse
+
+Get Eclipse 3.5 (galileo) Modeling:
+* http://www.eclipse.org/downloads/
+
+Install dependencies
+
+Update site to add or enable plugins in the following to avoid dependencies errors:
+
+
+SmartQVT (0.2.4+)
+Acceleo
+Topcased
+EMF Update Site
+EMFT Update Site
+EPP Packages Repository
+Galileo
+Qvt
+The Eclipse Project Updates
+
+
+
+		</div>
+	</div>
+  
+
+  
+
+  
+
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

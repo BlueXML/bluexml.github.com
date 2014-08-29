@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Share Forms Associations</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <h1>Simple Select</h1>
+
+<p>This widget is used if you choice "Select" as widget, you can also set template metainfo value=/side/controls/association-select.ftl</p>
+
+<h2>Metainfo options</h2>
+
+<p>Available option are (use metainfo to set them):</p>
+
+<ul>
+<li>searchInSite [true|false]: default value "true", enable/disable filter available items on current site.</li>
+<li>itemType [&lt; prefixedQName>]: default value is set to association endPoint, can be used to select a subtype.</li>
+<li>multipleSelectMode [true|false]: default value is set according to endPoint. so you can force a multiple endePoint to false so only one item can be selected, but the other alternative (single endPoint forced to multiple) will implies runtime exception</li>
+<li>filterTerm [String,<em> ]: default value '</em> ' (accept all value), can be used to filter items on cm:name</li>
+<li><p>advancedQuery [&lt; query>]: should be follow the grammar, please not ' char is used to indicate terminal items</p></li>
+<li><p>&lt; query>=&lt; subquery>+</p></li>
+<li>&lt; subquery>=[' ( ']?&lt; attributeQuery>[' '&lt; operator>' '&lt; attributeQuery>]*[' ) ']?</li>
+<li>&lt; attributeQuery>=&lt; prefixedQName>'='&lt; value></li>
+<li>&lt; operator>=['AND'|'OR'|'NOT']</li>
+<li>&lt; value>= any String, beware of ' ' char a this moment this should cause some trouble because ' ' is use as separator</li>
+<li>example :' ( cm:name=toto OR cm:name=titi ) AND cm:title=super'</li>
+<li>maxResults [integer]: default -1 (unbounded), can be used to limit items numbers</li>
+<li>hideSelector [true|false]: default is false, can be used to disable the select, could be used in conjunction with "add new", so user can only create new item instead of select existing ones</li>
+<li>getDataSource [js function]: must be a javascript function that build a YUI DataSource to replace the default one, use this method if you can't filter as you wish using filterTerm and advancedQuery, so you can implements a new data webscript that give you same data structure in response.</li>
+<li>association form class, allow the "Add" and "Edit" features , so user can create/edit a item to select.</li>
+<li>To disable Add feature create metadata key=allowToCreate, value=false</li>
+<li>To disable Edit feature create metadata key=allowToEdit, value=false</li>
+<li>for association that allow multiple target :</li>
+<li>nodoubleValue : control that added value do not already exists in list.</li>
+<li>nodoubleLabel : control that added label (the displayed value cm:name in main cases) do not already exists in list.</li>
+</ul>
+
+
+<h1>Autocomplete</h1>
+
+<p>To use this widget, create a metainfo element under the modelChoiceField :</p>
+
+<ul>
+<li>key=template</li>
+<li>value=/side/controls/association-autocomplete.ftl</li>
+</ul>
+
+
+<h1>Picker for TreeFilter</h1>
+
+<p>This widget is designed to select node in a tree. You need to setup following parameters using metainfo(key/value). Xtension attribute can be used too but mainly for backward compatibility, so prefer metainfo:</p>
+
+<ul>
+<li>template : /side/controls/association-treeNode.ftl, this enable the treeNode widget (an extension of Alfresco.ObjectPicker)</li>
+<li>params :</li>
+</ul>
+
+
+<h1>CheckBox</h1>
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

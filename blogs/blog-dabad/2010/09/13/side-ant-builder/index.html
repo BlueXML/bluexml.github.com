@@ -1,0 +1,579 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>SIDE Process Customization</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <h1>Introduction</h1>
+
+<p>The main SIDE process can be described as following :</p>
+
+<ul>
+<li>Models validation (optional)</li>
+<li>Clean generation folder (optional)</li>
+<li>Run all selected generators</li>
+<li>Run all selected deployers</li>
+<li>Generate a report</li>
+</ul>
+
+
+<p>But users may have something to customize in this process to fit his needs.</p>
+
+<p>For examples :</p>
+
+<ul>
+<li>User may want to add some packages in right folder before deployment.</li>
+<li>Start or stop some process before or after deployment (stop alfresco before deployment, and start it after deployment)</li>
+<li>Override some generated files with his owns.</li>
+</ul>
+
+
+<p>We can imagine many use case where user need to customize SIDE process.</p>
+
+<p>To response to these requirements, main SIDE actions can be launched from Eclipse Ant runner.</p>
+
+<h1>SIDE Process Tasks</h1>
+
+<h2>Task : side.validate</h2>
+
+<p>This task can be use to validate models listed in the application file</p>
+
+<p>Parameters:</p>
+
+<ul>
+<li><p>applicationfile: path to the application model</p>
+
+<p>  <source lang="xml">
+  &lt;side.validate</p>
+
+<pre><code>             applicationfile="${applicationFile}" /&gt;
+</code></pre>
+
+<p>  </source></p></li>
+</ul>
+
+
+<h2>Task : side.clean</h2>
+
+<p>This task delete file in generation folders</p>
+
+<p>Parameters :</p>
+
+<ul>
+<li>applicationfile: path to the application model</li>
+<li><p>configurationname: the configuration name to use</p>
+
+<p>  <source lang="xml">
+  &lt;side.clean</p>
+
+<pre><code>             applicationfile="${applicationFile}"
+             configurationname="${configurationName}" /&gt;
+</code></pre>
+
+<p>  </source></p></li>
+</ul>
+
+
+<h2>Task : side.generate</h2>
+
+<p>This task call a generator, configuration are extracted from application file</p>
+
+<p>Parameters:</p>
+
+<ul>
+<li>applicationfile: path to the application model</li>
+<li>configurationname: the configuration name to use</li>
+<li>componantid: the generator identifier</li>
+<li>generate: <nowiki>[true|false]</nowiki> enable or disable file generation, default=true</li>
+<li><p>pack: <nowiki>[true|false]</nowiki> enable or disable files packaging, default=true</p>
+
+<p>  <source lang="xml">
+  &lt;side.generate</p>
+
+<pre><code>             applicationfile="${application}"
+             configurationname="${configurationName}"                             componantid="com.bluexml.side.Class.generator.alfresco.extension.sideEnterprise"
+             pack="false"
+             generate="true"/&gt;
+</code></pre>
+
+<p>  </source></p></li>
+</ul>
+
+
+<h2>Task : side.deploy</h2>
+
+<p>This task calls a deployer.</p>
+
+<p>Parameters :</p>
+
+<ul>
+<li>applicationfile : path to the application model</li>
+<li>configurationname : the configuration name to use</li>
+<li><p>componantid : the generator identifier</p>
+
+<p>  <source lang="xml">
+  &lt;side.deploy</p>
+
+<pre><code>             applicationfile="${application}"
+             configurationname="${configurationName}"
+             componantid="com.bluexml.side.Deployer.xformsDirectCopy" /&gt;
+</code></pre>
+
+<p>  </source></p></li>
+</ul>
+
+
+<h2>Task : side.report</h2>
+
+<p>This task generates an XML/HTML report listing actions made by SIDE process.</p>
+
+<p>Parameters:</p>
+
+<ul>
+<li>applicationfile: path to the application model</li>
+<li><p>configurationname: the configuration name to use</p>
+
+<p>  <source lang="xml">
+  &lt;side.report</p>
+
+<pre><code>             applicationfile="${application}"
+             configurationname="${configurationName}" /&gt;
+</code></pre>
+
+<p>  </source></p></li>
+</ul>
+
+
+<h1>SIDE Ant build file generation</h1>
+
+<p>An action on contextual menu for application files, called "Generate Ant build file", can be used to generate a SIDE build file that use application file as configuration and contains target for each configuration.</p>
+
+<p>This can be used to create a build file to start from to create custom process.</p>
+
+<h2>Using SIDE Ant Tasks</h2>
+
+<p>We developed SIDE Ant Tasks to enable easy SIDE Process customization. Let's explain it through a quick example:</p>
+
+<ul>
+<li>You have a SIDE project with a data model, SIDE Enterprise generate extension for Alfresco, but defaults generated messages must be customized.</li>
+<li>You will need to override generated files by your owns.</li>
+</ul>
+
+
+<p>From Application model:</p>
+
+<ul>
+<li>Click on "Generate Ant build file" from contextual menu. A build.xml file is created.</li>
+<li>Click on "run as/Ant Build ..." from this build file to run one of application configuration.</li>
+</ul>
+
+
+<p>Be aware <u>to set the right JRE</u>:</p>
+
+<ul>
+<li>Go in JRE tab</li>
+<li>Select "'''run in the same JRE as the workspace'''" to allow ant to have access to eclipse and side ant task.</li>
+</ul>
+
+
+<p>If everything goes well, you can now customize build file:</p>
+
+<ul>
+<li>Deactivate packaging on generator: Edit build.xml, locate &lt; side.generator tasks and add/set "pack" property to false</li>
+<li>Launch ant build</li>
+</ul>
+
+
+<p>Locate in temporary folders the file you want to override:</p>
+
+<ul>
+<li>Create a property to indicate the parent directory, another to indicate the folder that contains yours files.</li>
+</ul>
+
+
+<p>Presently, generators only create files in temporary folders. You can add your own custom ant task. Before deployer execution, you can call side.generate with pack=true generate=false, so this task will take files in temporary folder as is and build packages</p>
+
+<p>To override some files, follow this example :</p>
+
+<pre><code>&lt;source lang="xml"&gt;
+&lt;side.generate applicationfile="${application}" configurationname="AbsenceManagement" componantid="com.bluexml.side.Class.generator.alfresco.extension.sideEnterprise" pack="false"/&gt;
+
+&lt;eclipse.convertPath property="my.files" resourcepath="/abs/customFiles/AbsenceManagement_Model"/&gt;
+
+&lt;eclipse.convertPath property="generator.temp" resourcepath="/abs/build/generated/generator_com.bluexml.side.clazz.generator.alfresco.extension.sideenterprise.AlfrescoGenerator/AbsenceManagement_Model"/&gt;
+
+&lt;copy todir="${generator.temp}/" overwrite="true" verbose="true"&gt;
+    &lt;fileset dir="${my.files}/"&gt;
+        &lt;include name="**/*.*"/&gt;
+    &lt;/fileset&gt;
+&lt;/copy&gt;
+
+&lt;side.generate applicationfile="${application}" configurationname="AbsenceManagement" componantid="com.bluexml.side.Class.generator.alfresco.extension.sideEnterprise" generate="false"/&gt;
+
+&lt;/source&gt;
+</code></pre>
+
+<p>In summary, to override generated files:</p>
+
+<ul>
+<li>Make a copy in build.xml of the generate task that create the file</li>
+<li>Add pack=false in the first copy (this task only generate)</li>
+<li>Add generate=false on the second (this task only package)</li>
+<li>Add your custom code between the generation task and the package task.</li>
+</ul>
+
+
+<p>But it's also possible, before deploying tasks, to patch zip and amp files. So you don't need to know anything about generators. You can do as you wish.</p>
+
+<h1>SIDE reverse content model Task</h1>
+
+<h2>side.reverse.alfresco.model</h2>
+
+<p>Parameters :</p>
+
+<ul>
+<li>output: absolute path to directory where to write reversed models</li>
+<li>failonerror: set the ant build to fail if error occur true, false, default if true</li>
+<li>verbose: enable/disable full log output</li>
+<li>fileset: use fileset element to select alfresco content model files and optionally some additional dt model to use to resolve references</li>
+</ul>
+
+
+<p>This example shows how to define a reverse of customs alfresco models, using reversed native alfresco models as references</p>
+
+<pre><code>&lt;source lang="xml"&gt;
+&lt;side.reverse.alfresco.model output="/Users/bluexml/workspace/myProject/out"
+failonerror="false" verbose="false"&gt;
+    &lt;fileset dir="/Users/bluexml/workspace/myProject/alfresco/models"&gt;
+        &lt;include name="*.xml" /&gt;
+    &lt;/fileset&gt;
+    &lt;fileset dir="/Users/bluexml/workspace/runtime-allplugins/Model-library-Alfresco-3.4.d-CE/data"&gt;
+        &lt;include name="*.dt"/&gt;
+    &lt;/fileset&gt;
+&lt;/side.reverse.alfresco.model&gt;
+&lt;/source&gt;
+</code></pre>
+
+<h1>SIDE model Initialization Tasks</h1>
+
+<h2>Task: side.initialize.all</h2>
+
+<p>This task is the same than the one from dt file -> SIDE/Initialize action</p>
+
+<p>Parameters:</p>
+
+<ul>
+<li>alfrescoversion : ALFRESCO_34D_CE, ALFRESCO_32R2_CE</li>
+<li>tomcathome : absolute path to the tomcat directory</li>
+<li><p>model workspace relative path to the dt model</p>
+
+<p>  <source lang="xml">
+  &lt;side.initialize.all alfrescoversion="ALFRESCO_34D_CE" tomcathome="/Users/bluexml/servers/alfresco-community-3.4.d/tomcat"
+   model="/TestSIDEAntTasks/src/models/data/testAnt.dt"/>
+  </source></p></li>
+</ul>
+
+
+<h2>Task: side.initialize.workflowForm</h2>
+
+<p>This task is the same than the one from dt file -> SIDE/Initialize action</p>
+
+<p>Parameters :</p>
+
+<ul>
+<li><p>model: workspace relative path of your workflow model</p>
+
+<p>  <source lang="xml">
+  &lt;side.initialize.workflowForm model="/TestSIDEAntTasks/src/models/workflow/DefaultName.workflow" />
+  </source></p></li>
+</ul>
+
+
+<h2>Task: side.initialize.application</h2>
+
+<p>This task is the same than the one from dt file -> SIDE/Initialize action</p>
+
+<p>Parameters:</p>
+
+<ul>
+<li><p>model: the application model file path (must be in the current Eclipse workspace)</p>
+
+<p>  <source lang="xml">
+  &lt;side.initialize.application model="/eclipseProject/src/models/application/my.application" />
+  </source></p></li>
+</ul>
+
+
+<h2>Task: side.initialize.all</h2>
+
+<p>This task is the same than the one from dt file -> SIDE/Initialize action</p>
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

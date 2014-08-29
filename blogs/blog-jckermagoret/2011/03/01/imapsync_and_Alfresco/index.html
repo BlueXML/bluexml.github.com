@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>imapsync and Alfresco</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <h1>Use case</h1>
+
+<p>The YaMma (Yet Another Mail Management Application) project aims at managing mails and emails. So we want a way to input emails into the repository, which is for instance an Alfresco one. Moreover, Alfresco provides IMAP support but it lacks one important feature -IMAPS, has one important bug -folder doesn't refresh quickly, a huge drawback -the necessity to configure a new IMAP account on each customer computer.</p>
+
+<h1>Solution</h1>
+
+<p>To circumvent all these problems, there is a very simple solution, which only consists to create a folder, called Alfresco for example, in each already existing IMAP account of our customers. Then, we'll just need to synchronize this one with the existing IMAP account each customer has. We avoid the 3 previous drawbacks:</p>
+
+<ul>
+<li>no security hole: imapsync supports SSL so by using it on my Alfresco server, I can connect to host1 with IMAPS and to host2 with IMAP through localhost which is safe</li>
+<li>my Alfresco folder is always updated like my other mail folders, no refresh problem anymore</li>
+<li>no need to install anything on the customer's computer</li>
+</ul>
+
+
+<h1>Which Software?</h1>
+
+<p>I had a look at imap synchronization software. I noticed isync and imapsync:</p>
+
+<ul>
+<li>iSync was interesting but there was a final bug preventing me to make things work</li>
+<li>imapsync made finally the job but the final solution needed a few hours to get everything ok. So, here is the solution.</li>
+</ul>
+
+
+<h1>Installation</h1>
+
+<p>First, make :</p>
+
+<ul>
+<li>apt-get install imapsync</li>
+</ul>
+
+
+<p>This will install the required libraries for imapsync. Then, go on fedorahosted and get the last available imapsync version (1.434 the 2011-05-25).</p>
+
+<p>If you are using debian Squeeze, imapsync seems not to be available anymore. Don't worry, just add the following into your /etc/apt/sources.list to use the package available for lenny:</p>
+
+<pre><code>deb http://ftp.debian.org/debian lenny main contrib
+</code></pre>
+
+<p>Then update your sources with the following:</p>
+
+<pre><code>apt-get update
+</code></pre>
+
+<p>Then just do:</p>
+
+<pre><code>tar xzvf imapsync-xxx.tgz
+cd imapsync-xxx
+perl -MCPAN -e shell
+install Mail::IMAPClient
+make install
+</code></pre>
+
+<h1>Synchronization</h1>
+
+<p>It's now time to write a little script, called for example imapsync.sh, to make the migration occur. Note that host2 is the server where my Alfresco server resides. On host1 resides my IMAP server with my mailbox. I created an Alfresco folder in it and I only synchronized this one.</p>
+
+<pre><code>!/bin/sh
+imapsync \
+       -host1 yourhost1 -ssl1 -user1 mylogin@bluexml.com -passfile1 pass1.txt -folder INBOX.Alfresco \
+       -host2 localhost -prefix2 "INBOX/" -sep2 "/" -user2 myLoginOnAlfresco -passfile2 pass2.txt \
+       -useheader Subject -useheader Date \
+       -noauthmd5 -syncinternaldates
+</code></pre>
+
+<p>If you want some debug information, just add debug debugimap.</p>
+
+<p>Finally, just type the following:</p>
+
+<pre><code>sh imapsync.sh
+</code></pre>
+
+<p>If you make a man imapsync, you'll find a very interesting script to synchronize a set of mailboxes with different users and passwords. The script may be very easily updated to indicate also the folder you want to synchronize.</p>
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

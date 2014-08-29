@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>QRCode</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <h1>Introduction to zxing.org</h1>
+
+<p>I just discovered zxing.org a few days ago. It's an interesting tool to generate and analyze bar code and QR Codes.</p>
+
+<p>A QRCode stands for Quick Response Code and aims at replacing bar codes in the future. Here is an example of QRCode:</p>
+
+<p><img class="center" src="http://www.myxph.com/photos/29315-qr-code-barcode-example-ets.png" width="100px" height="100px"/></p>
+
+<h1>Advantages on bar codes</h1>
+
+<p>Bar code stores information in one dimension. QR Code stores information on 2 dimensions. You then can store more information, and this one ay be redundant so if your QRCode isn't complete, you can still get the information.</p>
+
+<h1>Download and compile</h1>
+
+<p>Just get the source on the svn server and compile core and javase modules. It's enough to use the command to extract the information from a QRCode</p>
+
+<h1>Test</h1>
+
+<p>By using the following command, you can extract the information stored into it a QRCode:</p>
+
+<pre><code>java -cp javase/javase.jar:core/core.jar com.google.zxing.client.j2se.CommandLineRunner "http://chart.apis.google.com/chart?cht=qr&amp;chs=230x230&amp;chl=MECARD%3AN%3AJean-Christophe+Kermagoret%3BTEL%3A%2B33240466278%3BURL%3Ahttp%3A%2F%2Fwww.bluexml.com%3BEMAIL%3Ajck-qrcode%40bluexml.com%3BADR%3A40%2C+bd+Jean+Ingres+44100+Nantes%3B%3B"
+</code></pre>
+
+<p>This will give you the following results:</p>
+
+<p>Raw result:</p>
+
+<pre><code>MECARD:N:Jean-Christophe Kermagoret;TEL:+33240466278;URL:http://www.bluexml.com;EMAIL:jck-qrcode@bluexml.com;ADR:40, bd Jean Ingres 44100 Nantes;;
+Parsed result:
+Jean-Christophe Kermagoret
+40, bd Jean Ingres 44100 Nantes
++33240466278
+jck-qrcode@bluexml.com
+http://www.bluexml.com
+</code></pre>
+
+<p>Also, there were 4 result points.</p>
+
+<pre><code>Point 0: (39.0,191.0)
+Point 1: (39.0,39.0)
+Point 2: (191.0,39.0)
+Point 3: (179.0,179.0)
+</code></pre>
+
+<p>You can then parse the results very easily to take the right decision.</p>
+
+<h1>YaMma Use Case</h1>
+
+<p>I'm going to use this QRCode to add information manually on paper documents for the next version of the YaMma open source project, based on Alfresco, which deals with mail (paper and electronic) management. The document can then be acquired and analyzed through an OCR to get the previous information. If quality isn't enough, you can add the --try_harder parameter. The document will then be automatically filed into the right directory of your file plan.</p>
+
+<h1>Mobile Use Case</h1>
+
+<p>You can also use your phone mobile to extract the information. Install the i-nigma application on your iPhone and scan the QRCode above. You'll almost instantly get the information.</p>
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

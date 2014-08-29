@@ -1,0 +1,327 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>How to cross navigate your Alfresco repository and relate things like never before/Implementation</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <h1>The goal</h1>
+
+<p>I want a system to help me to cross navigate my organization's Alfresco repository.</p>
+
+<p>Being able to browse categories in Alfresco, I need to enhance my content by adding relevant categories. There are 2 kinds of solutions:</p>
+
+<ul>
+<li><p>semantic improvement through content analysis and specific part identification in this content like place, people and organization.</p></li>
+<li><p>semantic improvement through paths' and content's name analysis</p></li>
+</ul>
+
+
+<h1>The solution: semantic improvement</h1>
+
+<p>People don't like to input metadata like categories. We're all lazy and even if people were eager at entering some information, the risk would exist they choose the wrong one.</p>
+
+<h2>Semantic improvement through content analysis</h2>
+
+<p>There are at least 2 solutions :</p>
+
+<ul>
+<li><p>Stanbol, an apache project, which you can download and install into your system</p></li>
+<li><p>OpenCalais, a private project in the cloud from Reuters, which you can use</p></li>
+</ul>
+
+
+<p>These 2 solutions analyse the content of a document and tag the document when specific information is identified into it and linked with an external database. For example, if a document contains the word "Paris", this latter will be suggested as a category because there is such an information into external database (dbpedia). The ability to detect places is directly related to the solution and the richness of your external database.</p>
+
+<p>For example, if your document content contains the word "Marseille", which is the 2nd french city (for the number of people), Stanbol won't give you any information, which is disappointing enough to prevent people to use such a system.</p>
+
+<p>More information on this in another post, to write...</p>
+
+<h2>Semantic improvement through paths' and content's name analysis</h2>
+
+<p>Another kind of solution consists in analyzing paths and content to extract relevant information. Indeed, while people are reluctant to input metadata, there is one they are used to enter: directory and file names. Moreover, these informations are related to the content.</p>
+
+<p>By analyzing your repository in such a way, you'll have numerous categories at the end. Just eliminate the ones present once, which means there no added value in cross navigation, and think about the others. Of course, the most used these categories are, the most interesting they are. It's up to you to choose the right analysis level. You may conclude your work with 200 or 300 categories structured into 2 or 3 levels.</p>
+
+<pre><code>You can then cross navigate on your repository content and relate things like never before.
+</code></pre>
+
+<h1>Conclusion</h1>
+
+<p>I think this technique provides quickly some added value to your repository.</p>
+
+<p>Next post will provide an implementation example so you can set up this cross navigation.</p>
+
+<h1>Resources</h1>
+
+<p>[stanbol] http://stanbol.apache.org
+[semantics4alfresco] https://code.google.com/p/semantics4alfresco/</p>
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

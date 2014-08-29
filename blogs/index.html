@@ -1,0 +1,526 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Blog</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        
+
+
+	<div class="post">
+		<div style="float: right">
+			<img src="./blog-jckermagoret/images/jckermagoret.png" width="75px"/>
+		</div>
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/05/14/Read-the-docs">Local Read The Docs Installation</a></h3>
+		<p class="meta">Date: Wed May 14 00:00:00 +0200 2014</p>
+		<p class="author">Auteur: jckermagoret</p>
+		<div class="entry">
+			Introduction I want to migrate RTD from sqlite to postgres. To do so, I first need to find the settings file. Unfortunately, I'm a Django newbie :-) Settings To start, read Chapter 12 of the Django Book. It's all about deployment. In checkouts/readthedocs, have a look at manage.py : #!/usr/bin/env python import os import sys if __name__ == "__main__": os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.sqlite") sys.path.append('readthedocs') from django.core.management import execute_from_command_line execute_from_command_line(sys.argv) As you can see: * DJANGO_SETTINGS_MODULE=settings.sqlite which means settings are filled from the settings/sqlite.py file. To migrate in production, we just need to replace it with "settings". The settings/init.py file will then be...
+		</div>
+	</div>
+
+	<div class="post">
+		<div style="float: right">
+			<img src="./blog-jckermagoret/images/jckermagoret.png" width="75px"/>
+		</div>
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/04/25/RO-system">RO System</a></h3>
+		<p class="meta">Date: Fri Apr 25 00:00:00 +0200 2014</p>
+		<p class="author">Auteur: jckermagoret</p>
+		<div class="entry">
+			Introduction
+
+/etc
+
+
+adjtime
+
+
+
+/var
+
+/var/local
+
+Ressources
+
+
+RO Root on Debian
+
+
+
+		</div>
+	</div>
+
+	<div class="post">
+		<div style="float: right">
+			<img src="./blog-jckermagoret/images/jckermagoret.png" width="75px"/>
+		</div>
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/04/23/orbit-open-ad-server">Orbit Open Ad Server Installation</a></h3>
+		<p class="meta">Date: Wed Apr 23 00:00:00 +0200 2014</p>
+		<p class="author">Auteur: jckermagoret</p>
+		<div class="entry">
+			Introduction This software may be downloaded on [OrbitScripts]. Installation Read readme.txt in the main installation directory. Install PDO sqlite, SimpleXML... If you use a recent php installation (for example php 5.3 or 5.4), you may encounter the following warnings: disable disable_functions mysql_escape_string => must be replace by mysql_real_escape_string Enable mod_rewrite Allow .htaccess disable disable_functions In /etc/php5/apache2/php.ini, find disable_functions and set it to nothing: disable_functions = mysql_escape_string Just replace mysql_escape_string with mysql_real_escape_string: replace "mysql_escape_string" "mysql_real_escape_string" -- system/database/drivers/mysqli/mysqli_driver.php replace "mysql_escape_string" "mysql_real_escape_string" -- system/database/drivers/zend/zend_driver.php replace "mysql_escape_string" "mysql_real_escape_string" -- system/database/drivers/mysql/mysql_driver.php Other warnings may be ignored enable mod_rewrite a2enmod rewrite enable .htaccess If you have...
+		</div>
+	</div>
+
+	<div class="post">
+		<div style="float: right">
+			<img src="./blog-jckermagoret/images/jckermagoret.png" width="75px"/>
+		</div>
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/04/03/read-the-docs">Read The Docs Installation</a></h3>
+		<p class="meta">Date: Thu Apr 03 00:00:00 +0200 2014</p>
+		<p class="author">Auteur: jckermagoret</p>
+		<div class="entry">
+			Introduction
+
+Ressources
+
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="post">
+		<div style="float: right">
+			<img src="./blog-jckermagoret/images/jckermagoret.png" width="75px"/>
+		</div>
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/04/03/gitorious">Gitorious Installation</a></h3>
+		<p class="meta">Date: Thu Apr 03 00:00:00 +0200 2014</p>
+		<p class="author">Auteur: jckermagoret</p>
+		<div class="entry">
+			Introduction
+
+Exploitation [exploitation]
+Problem of resources not [precompiled]
+Taking over ownership of Projects and Repositories as Administrator [ownership]
+Memory Allocation Error [ENOMEM]
+
+Ownership
+
+bin/transfer-ownership
+
+Ressources
+
+
+exploitation
+precompiled
+[installation] http://famousphil.com/blog/2011/06/installing-gitorious-on-centos-5-6-x64/
+[ownership] https://groups.google.com/forum/#!topic/gitorious/gxlhm1qQ1fE
+[ENOMEM] https://groups.google.com/forum/#!topic/capistrano/WDAPMl6A1Z4
+
+
+
+		</div>
+	</div>
+
+	<div class="post">
+		<div style="float: right">
+			<img src="./blog-jckermagoret/images/jckermagoret.png" width="75px"/>
+		</div>
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/02/03/suspend-system">Suspend Processes for Quick Restarts</a></h3>
+		<p class="meta">Date: Mon Feb 03 00:00:00 +0100 2014</p>
+		<p class="author">Auteur: jckermagoret</p>
+		<div class="entry">
+			Introduction In a multi-host environment, I want to suspend system execution so I can save resources while not used and restart quickly as soon as user comes back. Before describing the problem, here is a short comparison beetween OepnVZ and KVM: * http://wiki.buyvm.net/doku.php/openvz_vs_kvm The problem In such an environment, saving resources is really very important. It's the only way to serve 100s of organizations with minimal hardware and lower down the hosting price. There are various ways to do it: * at the user space level: while running, just suspend process execution * at the system level: just make a...
+		</div>
+	</div>
+
+	<div class="post">
+		<div style="float: right">
+			<img src="./blog-jckermagoret/images/jckermagoret.png" width="75px"/>
+		</div>
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/02/03/HA-Alfresco">High Availability (HA) Alfresco</a></h3>
+		<p class="meta">Date: Mon Feb 03 00:00:00 +0100 2014</p>
+		<p class="author">Auteur: jckermagoret</p>
+		<div class="entry">
+			Introduction
+
+Ressources
+
+
+HA
+
+
+
+		</div>
+	</div>
+
+	<div class="post">
+		<div style="float: right">
+			<img src="./blog-jckermagoret/images/jckermagoret.png" width="75px"/>
+		</div>
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/02/03/Alfresco+performances">Alfresco performances</a></h3>
+		<p class="meta">Date: Mon Feb 03 00:00:00 +0100 2014</p>
+		<p class="author">Auteur: jckermagoret</p>
+		<div class="entry">
+			Introduction
+
+Starting Alfresco is slow, which prevents stopping/restarting it at will.
+
+Ressources
+
+
+Tomcat starts very slow
+PSI Probe
+
+
+
+		</div>
+	</div>
+
+	<div class="post">
+		<div style="float: right">
+			<img src="./blog-jckermagoret/images/jckermagoret.png" width="75px"/>
+		</div>
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/02/02/html5-remote-client">HTML5 Remote Client</a></h3>
+		<p class="meta">Date: Sun Feb 02 00:00:00 +0100 2014</p>
+		<p class="author">Auteur: jckermagoret</p>
+		<div class="entry">
+			Introduction
+
+I want to access applications through a browser which basically means through a HTML5 and javascript client.
+
+The solution
+
+There are 2 types of solutions:
+* remote client applications access
+* remote server access
+
+Remote client applications access
+
+
+FernApp
+
+
+
+Remote server access
+
+There are various such implementations around:
+* noVNC
+* Guacamole
+* GateOne
+
+Please note [GateOne] is neither free, nor open source, in constrast with [noVNC] and [Guacamole].
+
+noVNC
+
+Just type your username + enter + yourpasswd + enter and that's it!
+
+Ressources
+
+
+GateOne
+
+
+
+http://bluexml.orbitopenadserver.com/admin/color_palettes
+
+		</div>
+	</div>
+
+	<div class="post">
+		<div style="float: right">
+			<img src="./blog-jckermagoret/images/jckermagoret.png" width="75px"/>
+		</div>
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/02/02/ad-server">Ad Server</a></h3>
+		<p class="meta">Date: Sun Feb 02 00:00:00 +0100 2014</p>
+		<p class="author">Auteur: jckermagoret</p>
+		<div class="entry">
+			Introduction
+
+I want to manage advertising. Are there any open solutions, or just proprietary ones?
+
+The solution
+
+There is only one open source version, based on dual licensing:
+* [OrbitOpenAdServer]
+
+Ressources
+
+
+OrbitOpenAdServer
+
+
+
+		</div>
+	</div>
+
+
+
+
+
+  
+
+
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

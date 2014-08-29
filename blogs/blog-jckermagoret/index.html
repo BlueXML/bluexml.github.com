@@ -1,0 +1,1025 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Blog de Jean-Christophe Kermagoret</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        
+
+<div style="float: right">
+	<img src="images/jckermagoret.png" width="200px"/>
+</div>
+
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/05/14/Read-the-docs">Local Read The Docs Installation</a></h3>
+		<p class="meta">Date: Wed May 14 00:00:00 +0200 2014</p>
+		<div class="entry">
+			Introduction I want to migrate RTD from sqlite to postgres. To do so, I first need to find the settings file. Unfortunately, I'm a Django newbie :-) Settings To start, read Chapter 12 of the Django Book. It's all about deployment. In checkouts/readthedocs, have a look at manage.py : #!/usr/bin/env python import os import sys if __name__ == "__main__": os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.sqlite") sys.path.append('readthedocs') from django.core.management import execute_from_command_line execute_from_command_line(sys.argv) As you can see: * DJANGO_SETTINGS_MODULE=settings.sqlite which means settings are filled from the settings/sqlite.py file. To migrate in production, we just need to replace it with "settings". The settings/init.py file will then be...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/04/25/RO-system">RO System</a></h3>
+		<p class="meta">Date: Fri Apr 25 00:00:00 +0200 2014</p>
+		<div class="entry">
+			Introduction
+
+/etc
+
+
+adjtime
+
+
+
+/var
+
+/var/local
+
+Ressources
+
+
+RO Root on Debian
+
+
+
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/04/23/orbit-open-ad-server">Orbit Open Ad Server Installation</a></h3>
+		<p class="meta">Date: Wed Apr 23 00:00:00 +0200 2014</p>
+		<div class="entry">
+			Introduction This software may be downloaded on [OrbitScripts]. Installation Read readme.txt in the main installation directory. Install PDO sqlite, SimpleXML... If you use a recent php installation (for example php 5.3 or 5.4), you may encounter the following warnings: disable disable_functions mysql_escape_string => must be replace by mysql_real_escape_string Enable mod_rewrite Allow .htaccess disable disable_functions In /etc/php5/apache2/php.ini, find disable_functions and set it to nothing: disable_functions = mysql_escape_string Just replace mysql_escape_string with mysql_real_escape_string: replace "mysql_escape_string" "mysql_real_escape_string" -- system/database/drivers/mysqli/mysqli_driver.php replace "mysql_escape_string" "mysql_real_escape_string" -- system/database/drivers/zend/zend_driver.php replace "mysql_escape_string" "mysql_real_escape_string" -- system/database/drivers/mysql/mysql_driver.php Other warnings may be ignored enable mod_rewrite a2enmod rewrite enable .htaccess If you have...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/04/03/read-the-docs">Read The Docs Installation</a></h3>
+		<p class="meta">Date: Thu Apr 03 00:00:00 +0200 2014</p>
+		<div class="entry">
+			Introduction
+
+Ressources
+
+
+
+
+
+
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/04/03/gitorious">Gitorious Installation</a></h3>
+		<p class="meta">Date: Thu Apr 03 00:00:00 +0200 2014</p>
+		<div class="entry">
+			Introduction
+
+Exploitation [exploitation]
+Problem of resources not [precompiled]
+Taking over ownership of Projects and Repositories as Administrator [ownership]
+Memory Allocation Error [ENOMEM]
+
+Ownership
+
+bin/transfer-ownership
+
+Ressources
+
+
+exploitation
+precompiled
+[installation] http://famousphil.com/blog/2011/06/installing-gitorious-on-centos-5-6-x64/
+[ownership] https://groups.google.com/forum/#!topic/gitorious/gxlhm1qQ1fE
+[ENOMEM] https://groups.google.com/forum/#!topic/capistrano/WDAPMl6A1Z4
+
+
+
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/02/03/suspend-system">Suspend Processes for Quick Restarts</a></h3>
+		<p class="meta">Date: Mon Feb 03 00:00:00 +0100 2014</p>
+		<div class="entry">
+			Introduction In a multi-host environment, I want to suspend system execution so I can save resources while not used and restart quickly as soon as user comes back. Before describing the problem, here is a short comparison beetween OepnVZ and KVM: * http://wiki.buyvm.net/doku.php/openvz_vs_kvm The problem In such an environment, saving resources is really very important. It's the only way to serve 100s of organizations with minimal hardware and lower down the hosting price. There are various ways to do it: * at the user space level: while running, just suspend process execution * at the system level: just make a...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/02/03/HA-Alfresco">High Availability (HA) Alfresco</a></h3>
+		<p class="meta">Date: Mon Feb 03 00:00:00 +0100 2014</p>
+		<div class="entry">
+			Introduction
+
+Ressources
+
+
+HA
+
+
+
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/02/03/Alfresco+performances">Alfresco performances</a></h3>
+		<p class="meta">Date: Mon Feb 03 00:00:00 +0100 2014</p>
+		<div class="entry">
+			Introduction
+
+Starting Alfresco is slow, which prevents stopping/restarting it at will.
+
+Ressources
+
+
+Tomcat starts very slow
+PSI Probe
+
+
+
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/02/02/html5-remote-client">HTML5 Remote Client</a></h3>
+		<p class="meta">Date: Sun Feb 02 00:00:00 +0100 2014</p>
+		<div class="entry">
+			Introduction
+
+I want to access applications through a browser which basically means through a HTML5 and javascript client.
+
+The solution
+
+There are 2 types of solutions:
+* remote client applications access
+* remote server access
+
+Remote client applications access
+
+
+FernApp
+
+
+
+Remote server access
+
+There are various such implementations around:
+* noVNC
+* Guacamole
+* GateOne
+
+Please note [GateOne] is neither free, nor open source, in constrast with [noVNC] and [Guacamole].
+
+noVNC
+
+Just type your username + enter + yourpasswd + enter and that's it!
+
+Ressources
+
+
+GateOne
+
+
+
+http://bluexml.orbitopenadserver.com/admin/color_palettes
+
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/02/02/ad-server">Ad Server</a></h3>
+		<p class="meta">Date: Sun Feb 02 00:00:00 +0100 2014</p>
+		<div class="entry">
+			Introduction
+
+I want to manage advertising. Are there any open solutions, or just proprietary ones?
+
+The solution
+
+There is only one open source version, based on dual licensing:
+* [OrbitOpenAdServer]
+
+Ressources
+
+
+OrbitOpenAdServer
+
+
+
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2014/01/28/Ascii-art">Ascii Art</a></h3>
+		<p class="meta">Date: Tue Jan 28 00:00:00 +0100 2014</p>
+		<div class="entry">
+			Introduction I want to create ascii art table from writer or spreadsheet table. I only found one really usable solution called [Senseful Solutions]. Another great solution, to draw ascii diagrams, is [Ascii flow]. The problem Writing ascii table is very boring. Senseful Solutions to the rescue. The solution Senseful Solutions is a web service. Just copy'n paste your table content from writer or spreadsheet to the input box and format it. Sometimes, the copy'n paste from writer to Senseful is bad. In this case, copy'n paste to a spreadsheet, then copy'n pas from the spreadsheet to the Senseful web service....
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2013/12/16/Unionfs-fuse">Unionfs-fuse</a></h3>
+		<p class="meta">Date: Mon Dec 16 00:00:00 +0100 2013</p>
+		<div class="entry">
+			Introduction I want to store content in various directories and have a unified view of them. Unionfs has been developed to achieve this need. The problem I work on ECM applications based on Alfresco. Custom developments are based on libs stored in WEB-INF. They are mixed with Alfresco ones which make difficult to know who did what. I can prefix them with a specific name so I will recognize them, but it is not a very convenient solution. Unionfs-fuse to the rescue. The solution Unionfs-fuse concatenates content from various directories into one. For example, imagine I have the following directories...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2013/12/13/Restore-windows-bug-with-OOo-LO">Restore window bug with Open/Libre Office</a></h3>
+		<p class="meta">Date: Fri Dec 13 00:00:00 +0100 2013</p>
+		<div class="entry">
+			Introduction "The last time you opened LibreOffice, it unexpectedly quit while reopening windows. Do you want to try to reopen its windows again? If you choose not to reopen windows, you may have to open and position the windows yourself This box won't go away by repeatably clicking either buttons, nor it have a way to skip this (though I can create/open documents). Even under File menu, the item "Quit LibreOffice" is always dimmed - the only way to get rid of this is to open terminal and do a 'kill -9' Solution http://ask.libreoffice.org/en/question/6752/libreoffice-startup-always-asking-reopen-windows/ Open Finder Option-click the Go menu...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2013/12/12/Alfresco_share_modules_dynamic_reloading">Importer des données en masse dans Alfresco à l'aide de bulk import</a></h3>
+		<p class="meta">Date: Thu Dec 12 00:00:00 +0100 2013</p>
+		<div class="entry">
+			Introduction
+
+Solution
+
+Implémentation
+
+Conclusion
+
+Ressources
+
+BluePrint:
+
+
+
+
+
+
+JRebel :
+
+
+
+
+
+
+
+
+
+
+
+Alternatives:
+
+
+
+
+
+
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2013/12/03/Import-data-into-Alfresco-with-bulk-import">Importer des données en masse dans Alfresco à l'aide de bulk import</a></h3>
+		<p class="meta">Date: Tue Dec 03 00:00:00 +0100 2013</p>
+		<div class="entry">
+			Introduction Importer les données en masse est un travail risqué et laborieux. Au-delà de l'import, il faut en effet vérifier que toutes les données ont été effectivement importées. Si ce n'est pas le cas, il faut déterminer les données non importées pour ne réimporter que celles-ci du fait des contenus très volumineux qu'on peut être amenés à traiter (plusieurs centaines de Go, voire plusieurs To). Cet article décrit l'approche suivie par BlueXML pour importer les données dans un repository Alfresco Community ou Enterprise. Solution La solution repose sur l'utilisation du module bulk import. Ce module permet d'importer les contenus et...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2013/11/23/Desimlocker-un-iphone-3g">Désimlocker un iPhone 2G</a></h3>
+		<p class="meta">Date: Sat Nov 23 00:00:00 +0100 2013</p>
+		<div class="entry">
+			Introduction J'ai un vieil iPhone de première génération. Evidemment, je n'ai pas la facture et n'ai pas pensé à le faire désimlocker à l'époque (2007) :-( Du coup, pas d'autres choix qu'un désimlockage sauvage... Vocabulaire Jailbreak et/ou Unlock ? Le jailbreak, c'est donner la possibilité à votre iphone de ne plus être limité aux applications de l'appstore. L'avantage est que vous pouvez par la suite utiliser d'autres sources d'applications, comme Cydia, qui vous permettront de désimlocker votre appareil. L'inconvénient, et il est de taille, est que vous n'avez justement plus accès à toutes ces nombreuses applications, toutes plus intéressantes les...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2013/11/19/Configurer-un-meta-moteur-de-recherche">Quel méta-moteur de recherche pour votre organisation</a></h3>
+		<p class="meta">Date: Tue Nov 19 00:00:00 +0100 2013</p>
+		<div class="entry">
+			Introduction
+
+Vidéos
+
+Ressources
+
+Polyspot
+
+
+http://www.polyspot.com
+
+
+
+Sinequa
+
+
+http://www.sinequa.com
+
+
+
+Google Search Appliance
+
+
+https://www.captechconsulting.com/blog/ron-difrango/alfresco-integration-gsa
+http://www.google.com/enterprise/gep/overview.html
+
+
+
+Exalead
+
+
+http://www.exalead.com
+
+
+
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2013/11/15/Rediger-une-documentation-unique-avec-markdown">Write a documentation in markdown</a></h3>
+		<p class="meta">Date: Fri Nov 15 00:00:00 +0100 2013</p>
+		<div class="entry">
+			Introduction
+
+Vidéo
+
+Resources
+
+
+Concatenate ODF files
+Update your MacText installation
+How to concatenate 2 ODF files
+convert asciidoc format to numerous ouput format such as docbook, odf, pdf, ...
+
+
+
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2013/11/10/SMB-CIFS_over_SSH">SMB (or CIFS) over SSH</a></h3>
+		<p class="meta">Date: Sun Nov 10 00:00:00 +0100 2013</p>
+		<div class="entry">
+			The goal
+
+Resources
+
+Description
+
+http://www.petri.co.il/whats_port_445_in_w2k_xp_2003.htm#
+
+Solutions
+
+http://www.minek.com/?port_redirection
+http://www.nikhef.nl/~janjust/CifsOverSSH/Win7Loopback.html#MountHome
+http://www.blisstonia.com/eolson/notes/smboverssh.php
+
+Summary
+
+http://sumofungus.wordpress.com/2010/07/23/ssh-tunneling-samba-on-windows-7/
+
+Questions
+
+http://serverfault.com/questions/356369/smb-proxy-connect-to-smb-server-through-ssh-tunnel-between-two-other-hosts
+http://superuser.com/questions/270678/ports-for-nated-windows-share
+http://forums.alfresco.com/forum/installation-upgrades-configuration-integration/configuration/cifs-server-subsystem-community
+
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2013/11/08/What_is_cross_navigation">What is cross navigation</a></h3>
+		<p class="meta">Date: Fri Nov 08 00:00:00 +0100 2013</p>
+		<div class="entry">
+			The goal
+
+Resources
+
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2013/11/07/How_to_enhance_your_Alfresco_repository-Implementation">Implementation of a cross navigation technique in Alfresco</a></h3>
+		<p class="meta">Date: Thu Nov 07 00:00:00 +0100 2013</p>
+		<div class="entry">
+			The goal We're going to implement the solution based on paths and content's name analysis. To achieve such a goal on Alfresco, we need the following things: a process to extract categories a script to assign extracted categories on a category browser to cross navigate the entire repository, able to cumulate criteria, to simulate a kind of facet navigation. In the example we are going to look at, I started at 4000 categories. Category extraction How to find categories? How to extract them? Finding the categories Let's consider the following directory and file name: /Sales/France/West/Nantes/ListOfCustomers.xls We may deduce from this...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2013/10/29/Ecrire_un_plugin_pour_Confluence">Ecrire un plugin pour Confluence</a></h3>
+		<p class="meta">Date: Tue Oct 29 00:00:00 +0100 2013</p>
+		<div class="entry">
+			Introduction Cette page explique comment écrire un plugin pour Atlassian. Configuration de l'environnement Adaptation de l'IDE L'IDE a été téléchargé et configuré en suivant les instructions sur [cette page][ide-for-linux/mac] sur le site d'Atlassian. Pour configurer la jre 1.6.0 sur mon Mac, j'ai ajouté la définition de la 1.6.0 stockée dans le répertoire suivant : /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home Comme expliqué dans les commentaires, pour installer maven, indiquer le site suivant comme source pour Juno : http://download.eclipse.org/releases/juno En effet, le site indiqué sur JIRA ne contient les références pour un plugin utile à maven et l'installation n'est alors pas possible. Installation du SDK L'installation...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2013/10/24/Video_JIRA_Capture">Vidéo de JIRA Capture</a></h3>
+		<p class="meta">Date: Thu Oct 24 00:00:00 +0200 2013</p>
+		<div class="entry">
+			Introduction
+
+JIRA Capture est un outil développé par Atlassian pour faciliter la remontée d'informations par les testeurs et les utilisateurs.
+
+Cette courte vidéo illustre l'utilisation de JIRA Capture pour faciliter les tests et la saisie de bugs. En effet, vous pouvez faire une copie d'écran de l'application tout en l'intégrant dans JIRA d'un seul clic, sans nécessiter de réaliser un document avec un traitement de texte pour l'y mettre. En outre, cela permet aux développeurs de tout de suite constater le bug sans télécharger le document, ouvrir le traitement de texte, ...
+
+Vidéo
+
+   
+
+
+Resources
+
+[JIRA Capture] https://www.atlassian.com/software/jira-capture/overview
+
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2013/10/23/How_to_enhance_your_Alfresco_repository">How to cross navigate your Alfresco repository and relate things like never before/Implementation</a></h3>
+		<p class="meta">Date: Wed Oct 23 00:00:00 +0200 2013</p>
+		<div class="entry">
+			The goal I want a system to help me to cross navigate my organization's Alfresco repository. Being able to browse categories in Alfresco, I need to enhance my content by adding relevant categories. There are 2 kinds of solutions: semantic improvement through content analysis and specific part identification in this content like place, people and organization. semantic improvement through paths' and content's name analysis The solution: semantic improvement People don't like to input metadata like categories. We're all lazy and even if people were eager at entering some information, the risk would exist they choose the wrong one. Semantic improvement...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2013/10/18/Alfresco_audit_analysis_solutions_benchmark">Alfresco Audit Analysis solutions benchmark</a></h3>
+		<p class="meta">Date: Fri Oct 18 00:00:00 +0200 2013</p>
+		<div class="entry">
+			The goal
+
+Resources
+
+[auditsurf/github] http://www.atolcd.com/btn-ll/audit-alfresco.html
+[auditsurf/overview] https://github.com/atolcd/alfresco-auditsurf
+
+[aaar/overview] http://fcorti.com/alfresco-audit-analysis-reporting/
+[aaar/vm] http://fcorti.com/alfresco-audit-analysis-reporting/aaar-alfresco-audit-analysis-reporting-cloud
+
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2013/08/02/Comment_ameliorer_votre_application_grace_aux_tests_utilisateurs_avec_JIRA_Capture">Comment ameliorer votre application grace aux tests utilisateurs faits avec JIRA Capture</a></h3>
+		<p class="meta">Date: Fri Aug 02 00:00:00 +0200 2013</p>
+		<div class="entry">
+			Introduction JIRA Capture est un outil développé par Atlassian pour faciliter la remontée d'informations par les testeurs et les utilisateurs. Exemple Lorsque vous testez une application, l'idéal est de pouvoir saisir toutes les informations concernant votre test dans le contexte de celui-ci. Vous êtes par exemple sur l'application suivante, en l'occurrence un formulaire Alfresco intégré dans une application JS. Vous remarquez que les libellés sont en anglais au lieu d'être en français. Avec JIRA Capture, il vous suffit de cliquer sur l'icône JIRA en haut à droite de l'URL de votre page en cours. Un nouvel onglet s'ouvre alors avec...
+		</div>
+	</div>
+  
+
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2012/09/23/Java_vs_Javascript_to_develop_business_rules_in_Alfresco_workflows">Java vs Javascript to develop business rules in Alfresco workflows</a></h3>
+		<p class="meta">Date: Sun Sep 23 00:00:00 +0200 2012</p>
+		<div class="entry">
+			While Javascript Server Side may seem easier, it's a real mess to debug. So, I clearly prefer to use Java which avoid this kind of problems thanks to JPDA. For example, use the following javascript snippet into a transition in an Alfresco Workflow based on jBPM (and generated with SIDE to make thinks a lot easier): var node =bpm_package.children[0]; var destination = node.parent.parent.childByNamePath("achieved"); if (node.shortType == 'YAMMA:com_bluexml_side_yamma_OutgoingMail') { destination = destination.childByNamePath("mail"); } else if (node.shortType == 'YAMMA:com_bluexml_side_yamma_Invoice') { destination = destination.childByNamePath("invoice"); } else if (node.shortType == 'YAMMA:com_bluexml_side_yamma_Quotation') { destination = destination.childByNamePath("quotation"); } node.move(destination); There is an error which is very...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2012/09/21/Javascript_logging">Javascript logging</a></h3>
+		<p class="meta">Date: Fri Sep 21 00:00:00 +0200 2012</p>
+		<div class="entry">
+			When you want to develop in javascript, you look for usual tools in programing languages. One of the best tool in Java is log4j. It's a tool to help developers to insert information in their code and display this information according the configuration. I t means you may have test and production configuration without the need to change anything. I gave a glimpse to google about javascript and logging and it gave me back 2 answers which seem of interest. It was: log4js log4javascript I first gave a try to log4js because of its name, very similar to the log4j...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2012/09/01/Alfresco_%22document-details%22_Page_Customization">Alfresco "document-details" Page Customization</a></h3>
+		<p class="meta">Date: Sat Sep 01 00:00:00 +0200 2012</p>
+		<div class="entry">
+			The document-details page is defined in the page directory located $TOMCAT/webapps/share/WEB-INF/classes/alfresco/site-data/pages/document-details.xml: &lt;?xml version='1.0' encoding='UTF-8'?&gt; &lt;page&gt; &lt;title&gt;Document Details&lt;/title&gt; &lt;title-id&gt;page.documentDetails.title&lt;/title-id&gt; &lt;description&gt;Document details&lt;/description&gt; &lt;description-id&gt;page.documentDetails.description&lt;/description-id&gt; &lt;template-instance&gt;document-details&lt;/template-instance&gt; &lt;authentication&gt;user&lt;/authentication&gt; &lt;/page&gt; This page uses the document-details template as indicated, located at $TOMCAT/webapps/share/WEB-INF/classes/alfresco/site-data/template-instances/document-details.xml &lt;?xml version='1.0' encoding='UTF-8'?&gt; &lt;template-instance&gt; &lt;template-type&gt;org/alfresco/document-details&lt;/template-type&gt; &lt;properties&gt; &lt;pageFamily&gt;documentlibrary&lt;/pageFamily&gt; &lt;container&gt;documentLibrary&lt;/container&gt; &lt;/properties&gt; &lt;/template-instance&gt; The document-details page is the result of the aggregation of the (take a deep breath :-) $TOMCAT/webapps/share/WEB-INF/classes/alfresco/templates/org/alfresco/document-details.ftl which looks like this for its most important part: &lt;div&gt; &lt;div&gt; &lt;@region id=doclibType + "document-metadata-header" scope="template" protected=true /&gt; &lt;@region id=doclibType + "document-metadata" scope="template" protected=true /&gt; &lt;@region id=doclibType + "document-info" scope="template" protected=true /&gt; &lt;@region id=doclibType + "document-versions" scope="template" protected=true...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2012/07/13/How_to_initialize_a_git_repository_from_an_existing_content">How to initialize a git repository from an existing content</a></h3>
+		<p class="meta">Date: Fri Jul 13 00:00:00 +0200 2012</p>
+		<div class="entry">
+			I'm sure it's not the shortest way to do it, but at least, it works :-) Create the git repository To achieve this, create the following script and name it create-git-repo.sh: #!/bin/sh REPO_NAME=$1 DESC=$2 GIT_SERVER=git.side-labs.org OWNER="Jean-Christophe+Kermagoret&lt;jck@bluexml.com&gt;" REPOSITORIES="/data/local/scm/git/$GIT_SERVER/repositories" GITWEB_PROJECTS="/" CLONEURL="https://git.side-labs.org/git/$REPO_NAME" # create a new bare repository cd $REPOSITORIES sudo -u www-data git init --bare $REPO_NAME cd $REPO_NAME #sudo -u git touch git-daemon-export-ok # additional set-up for Gitweb echo "$DESC" | sudo -u www-data tee description echo "$REPO_NAME $OWNER" | sudo -u www-data tee -a GITWEB_PROJECTS echo "$CLONEURL" | sudo -u www-data tee cloneurl Then to create the repo, just type the...
+		</div>
+	</div>
+  
+
+  
+
+  
+
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2012/01/13/Component_Content_Management_System">Component Content Management System</a></h3>
+		<p class="meta">Date: Fri Jan 13 00:00:00 +0100 2012</p>
+		<div class="entry">
+			The Problem To Address One more time, to prepare a course, I had to browse all the documentation I wrote to find the right material I needed. Of course, I had to rewrite part of it because it was not structured the right way. I think it's time to organize my content in a way I can reuse it. The Solution Some solution exist and are called Component Content System. Wikipedia gives us a very clear definition: A component content management system (CCMS) is a content management system that manages content at a granular level (component) rather than at the...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2011/08/01/SSL_configuration_on_Tomcat_for_Alfresco_authentication_with_Ldaps">SSL configuration on Tomcat for Alfresco authentication with Ldaps</a></h3>
+		<p class="meta">Date: Mon Aug 01 00:00:00 +0200 2011</p>
+		<div class="entry">
+			Use Case I want Alfresco to be able to authenticate on a Ldap server, secured with SSL. Problem Ldaps is a ldap service secured on SSL. So you need to accept the SSL certificate to use the service. Solution To do so in the java world, you need a java keystore which stores the certificates (and private keys too). This is a file usually stored in /etc/java/keystore.jks Installation You first need to get the SSL certificate of the ldaps service. You can get it through openssl command: openssl s_client -connect YOUR_SERVER:YOUR_PORT -showcerts Just copy the lines beetween -BEGIN- until -END-...
+		</div>
+	</div>
+  
+
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2011/06/12/Email_Management_System">Email Management System</a></h3>
+		<p class="meta">Date: Sun Jun 12 00:00:00 +0200 2011</p>
+		<div class="entry">
+			Use Case How to manage emails in a document management system so it is as convenient as a mail client? Not only plain emails with only a text body, but complex ones with a text body, an html one, one or more attachments? Requirements Manage emails means: file them process them through workflows link to them reuse them resend them Analysis Mails can be seen: as a whole: the .eml file as a set of parts: the meta-data, the text body, the attachments While the .eml file is interesting from a legal point of view, it is not practical because...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2011/05/23/SSL_configuration_on_Apache_as_a_front_end_for_Alfresco">SSL configuration on Apache as a front end for Alfresco</a></h3>
+		<p class="meta">Date: Mon May 23 00:00:00 +0200 2011</p>
+		<div class="entry">
+			Use Case I want to secure Alfresco (webdav) and Share Access through SSL. Solution The solution is to secure Alfresco access through Apache-SSL. Why not directly use Tomcat SSL? Because I want to protect 2 tomcat instances and only make one SSL installation. Moreover, I need some Apache specific features like rewriting ones. Only Apache access will be available so Alfresco will be available through ProxyPass features. Direct access is prohibited at the tomcat level. Configuration SSL Configuration cd /etc/ssl openssl genrsa -des3 -rand file1:file2:file3:file4:file5 -out server-with-passphrase.key 2048 openssl rsa -in server-with-passphrase.key -out server.pem openssl req -new -key server.pem -out...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2011/03/12/Automatic_Java_Class_Generation_From_jBPM_Process_Definition_File">Automatic Java Class Generation From jBPM Process Definition File</a></h3>
+		<p class="meta">Date: Sat Mar 12 00:00:00 +0100 2011</p>
+		<div class="entry">
+			Goal This page explains how to automatically add action in a jBPM workflow and generate the corresponding java class from a jBPM processdefinition file for each added action. At the end, you'll have a java class with a method for each action in transitions and events. The methods only contain a log statement at first. You then can inherit from it and customize the code if you want. Solution The solution is achieved in 2 steps: add a java action for each transition and event generate the java class with a method for each action Add a Java action for...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2011/03/12/Alfresco_multi-tenant_IMAP4_and_mount.davfs">Alfresco multi tenant IMAP4 and mount.davfs</a></h3>
+		<p class="meta">Date: Sat Mar 12 00:00:00 +0100 2011</p>
+		<div class="entry">
+			Use Case In a multi-tenant Alfresco, I want to be able to use IMAP4, which is not supported in this situation, except for the host (the main tenant). A work around consists in mounting other tenants through webdav to be able to copy content from one tenant to another, and then to extract meta-data through a content rule. This feature sounds like the replicate one which is unfortunately unavailable on multi-tenant systems. Summary The Alfresco host server acts like the main tenant which receives mails for other tenants then, through webdav, copied them to other tenants. In very short, Replicate...
+		</div>
+	</div>
+  
+
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2011/03/01/imapsync_and_Alfresco">imapsync and Alfresco</a></h3>
+		<p class="meta">Date: Tue Mar 01 00:00:00 +0100 2011</p>
+		<div class="entry">
+			Use case The YaMma (Yet Another Mail Management Application) project aims at managing mails and emails. So we want a way to input emails into the repository, which is for instance an Alfresco one. Moreover, Alfresco provides IMAP support but it lacks one important feature -IMAPS, has one important bug -folder doesn't refresh quickly, a huge drawback -the necessity to configure a new IMAP account on each customer computer. Solution To circumvent all these problems, there is a very simple solution, which only consists to create a folder, called Alfresco for example, in each already existing IMAP account of our...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2011/02/25/Observer_Pattern_Server_Side_Implementations">Observer Pattern Server Side Implementation</a></h3>
+		<p class="meta">Date: Fri Feb 25 00:00:00 +0100 2011</p>
+		<div class="entry">
+			You just discovered Observer pattern in javascript on the client, and we already talk about server side implementations. What does server side implementation add? This means that once you developed the Observer pattern on your client side application, you can very easily extend it to provide easy and widespread messaging interop among languages, platforms and brokers. This basically means you can communicate messages to a lot of others users. Server side implementation may be done through CometD, which is now part of dojo, which enable you to build very simple chat application for the most straight forward use case. Conclusion...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2011/02/24/Observer_Pattern_Multi_Framework_Implementation">Observer Pattern multi framework implementation</a></h3>
+		<p class="meta">Date: Thu Feb 24 00:00:00 +0100 2011</p>
+		<div class="entry">
+			We have seen in the previous posts how to use Observer Pattern in dojo and jQuery. But first, why do we bother at building such a unified solution? Why such a requirement? I have 2 main reasons: I can use it the same way whatever the context I am in. I don't want to remember the specific syntax for a specific framework. It makes code understandability easier. I can work simultaneously with various frameworks. For example, in Alfresco Share, I wrote a code snippet to use dojo in the document-details view to extend the way meta data are displayed in...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2011/02/23/Observer_Pattern_jQuery_usage">Observer Pattern jQuery usage</a></h3>
+		<p class="meta">Date: Wed Feb 23 00:00:00 +0100 2011</p>
+		<div class="entry">
+			If I take the example back, I just have to add the js corresponding to jQuery. I finally get the following html page: &lt;html&gt; &lt;head&gt; &lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"&gt;&lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;div id="menu"&gt; &lt;h1&gt;Menu&lt;/h1&gt; &lt;ul&gt; &lt;li&gt;&lt;a href="javascript:OldWay()"&gt;Old way&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href="javascript:ObserverWay()"&gt;Observer way&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/div&gt; &lt;div id="contentPortlet"&gt; &lt;h1&gt;Content&lt;/h1&gt; &lt;div id="content"&gt;&lt;/div&gt; &lt;/div&gt; &lt;div id="metadataPortlet"&gt; &lt;h1&gt;Detail&lt;/h1&gt; &lt;div id="metadata"&gt;&lt;/div&gt; &lt;/div&gt; &lt;/body&gt; &lt;/html&gt; I now add the event mechanism through the use of the bind and trigger functions. The bind action takes 2 arguments: the event name the function to call The following code snippet will make the contentPortlet listen to the info event: doc.bind('info', contentPortlet); An event...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2011/02/22/Observer_Pattern_dojo_usage">Observer Pattern dojo usage</a></h3>
+		<p class="meta">Date: Tue Feb 22 00:00:00 +0100 2011</p>
+		<div class="entry">
+			Let's take our previous code and replace jQuery mechanism by dojo: replace jquery lib by dojo lib replace bind by subscribe replace trigger by publish replace jquery sugar by dojo one Then transform the parameter passed when the trigger is fired as an array: 'View Updated Through The Old Way' becomes 'View Updated Through The Old Way' and remove the event from the content and metadata portlet. You don't need them anymore. If required, you can forward them in the parameters when the event is triggered. You now have the following code: &lt;html&gt; &lt;head&gt; &lt;script src="https://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js"&gt;&lt;/script&gt; &lt;script type="text/javascript"&gt; var doc...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2011/02/21/Observer_Pattern_Comparison_Beetween_jQuery%2C_Dojo_and_YUI">Observer Pattern Comparison Beetween jQuery, Dojo and YUI</a></h3>
+		<p class="meta">Date: Mon Feb 21 00:00:00 +0100 2011</p>
+		<div class="entry">
+			Observer Pattern: The Graal of The Developer In a very few words, this pattern enables to build agile software architecture by decoupling objects which produce information and objects which consume it. For example, it is really useful to update user interfaces after an event happens. First, we're going to deal with a very simple use case and provide a solution without and with this pattern (based on an algorithmic solution) to describe the problem Then, we'll provide a concrete solution in jQuery, Dojo and Y!UI to be able to compare them Then, we'll suggest a unified approach so we can...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2011/02/01/Fuse_and_OpenVZ">Fuse and OpenVZ</a></h3>
+		<p class="meta">Date: Tue Feb 01 00:00:00 +0100 2011</p>
+		<div class="entry">
+			Use Case To be able to use mount.davfs, I need to install fuse. My problem is I'm on a virtual machine, based on OpenVZ. Problem When installing fuse-utils through apt-get, everything went fine but mount.davfs doesn't work and give a short: /sbin/mount.davfs: can't open /dev/fuse This process works smoothly on a virtual machine based on Fully Virtualized (KVE) but not on an OpenVZ Diagnostic In OpenVZ, in contrast with KVE, virtual machines share with host node kernel modules and devices. This means 2 important hings: the host node must have any module you want to use on virtual machines the...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2011/01/13/Reduce_PDF_size_after_300ppp_and_color_scan">Reduce PDF size after 300ppp and color scan.md</a></h3>
+		<p class="meta">Date: Thu Jan 13 00:00:00 +0100 2011</p>
+		<div class="entry">
+			Use Case To manage paper documents in YaMma (Yet Another Mail Management Application), I do the following actions: scan 24bits-colors, 300ppp for good quality process them to ocr reduce their size create a pdf with the text from ocr embedded into the pdf For a document of 17 pages, its size is about 170Mo after such a scan. While this quality is interesting for OCR, there are about 10K documents into the company intranet and I can't put a file with such a size into my content repository... So the need for a solution to reduce the size of the...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2011/01/13/QR_Code">QRCode</a></h3>
+		<p class="meta">Date: Thu Jan 13 00:00:00 +0100 2011</p>
+		<div class="entry">
+			Introduction to zxing.org I just discovered zxing.org a few days ago. It's an interesting tool to generate and analyze bar code and QR Codes. A QRCode stands for Quick Response Code and aims at replacing bar codes in the future. Here is an example of QRCode: Advantages on bar codes Bar code stores information in one dimension. QR Code stores information on 2 dimensions. You then can store more information, and this one ay be redundant so if your QRCode isn't complete, you can still get the information. Download and compile Just get the source on the svn server and...
+		</div>
+	</div>
+  
+
+  
+	<div class="post">
+		<h3 class="title"><a href="/blogs/blog-jckermagoret/2011/01/10/OpenVZ_and_disk_share_with_volume_group_and_logical_volumes">OpenVZ and disk share with volume group and logical volumes</a></h3>
+		<p class="meta">Date: Mon Jan 10 00:00:00 +0100 2011</p>
+		<div class="entry">
+			Use case I have a virtual system with a main host and various virtual machines. I want these virtual machines to have some directories shared with the main host so the backup will be easier. Solution I mount a directory on my main host into the virtual machine. To be the more flexible possible, the mounted directory is based on a logical volume I can increase or decrease according to my needs. Implementation On your main host, create a logical volume and format it. For example, if you have a volume group called data, you could do this: lvcreate -L20G...
+		</div>
+	</div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

@@ -1,0 +1,375 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Test Data Generator</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <h1>Principe de fonctionnement</h1>
+
+<p>Un modèle conçu et déployé via SIDE étant donné en entrée, ce module se charge de l'instancier en y introduisant des données (remplir les valeurs des attributs d'un type, ...). Cette instanciation est "packagée" au sein d'un Alfresco Content Package (fichier d'extension .acp) qui est ensuite déployé sous Alfresco.</p>
+
+<h1>Fonctionnalités actuelles et limitations</h1>
+
+<p>Le module supporte les diagrammes possédant les caractéristiques suivantes:</p>
+
+<ul>
+<li>associations "générales" 1-N, N-1, N-N et 1-1</li>
+<li>l'association spécifique qu'est la composition (à ce sujet d'ailleurs, si à la fin de la génération vous constatez qu'il semble vous manquer des "contenus", cela est sûrement du au fait qu'un ou plusieurs "pères" (ou "sources") d'une ou plusieurs compositions n'ont pas été aléatoirement créés; les "fils" (ou "cibles") de ces compositions ont donc été éliminés pour respecter la sémantique de l'association qu'est la composition</li>
+<li>l'héritage (propagation des attributs)</li>
+<li>les aspects</li>
+<li>les énumérations</li>
+<li>les classes abstraites au sens où elles ne seront pas instanciées en tant que telles (mais s'il y a héritage, l'information qu'elles portent sera propagée)
+La limitation se porte au niveaux des agrégations (et des classes d'association?)</li>
+</ul>
+
+
+<h1>Architecture</h1>
+
+<p>Le module fait appel à deux webscripts dont le coeur métier est programmé en Java.
+Ce programme est découpé en neuf packages:</p>
+
+<ul>
+<li>com.bluexml.side.Framework.alfresco.dataGenerator.structure:
+ce dernier représente le bean contenant la structure du modèle (types, associations, ...)</li>
+<li>com.bluexml.side.Framework.alfresco.dataGenerator.dictionary:
+c'est ce dernier qui récupère les informations structurelles du modèle et "remplit" le bean structure</li>
+<li>com.bluexml.side.Framework.alfresco.dataGenerator.generator:
+il constitue le coeur de l'application et a pour rôle de générer aléatoirement des données en relation avec la structure du modèle.
+Ce travail s'effectue en créant des instances du modèle (cf point suivant)</li>
+<li>com.bluexml.side.Framework.alfresco.dataGenerator.graph
+l'instanciation du modèle s'apparente à la mise en place d'un graphe où les noeuds représentent les instances de type et les arcs les instances   d'associations. Ce package représente la définition de ces derniers.</li>
+<li>com.bluexml.side.Framework.alfresco.dataGenerator.data
+l'instanciation effetuée par le générateur "remplit" ce bean contenant toutes les instances du modèle</li>
+<li>com.bluexml.side.Framework.alfresco.dataGenerator.serialization.mapping
+les beans datas et structure lui sont envoyés et un mapping est réalisé pour créer le fichier .xml contenant les directives de création des objets au sein de l'ACP: le bean structure est "mappé" avec le squelette du xml et le bean datas avec les données au sein du squelette</li>
+<li>com.bluexml.side.Framework.alfresco.dataGenerator.serialization:
+il contient le "main" du mapping et la méthode pour packager l'ACP</li>
+<li>com.bluexml.side.Framework.alfresco.dataGenerator.load:
+contient les méthodes pour déployer automatiquement le .acp généré dans Alfresco et assurer sa sauvegarde</li>
+<li>com.bluexml.side.Framework.alfresco.dataGenerator.context:
+nécessaire pour retrouver le contexte Spring d'Alfresco et d'ainsi récupérer les instances de bean</li>
+<li>com.bluexml.side.Framework.alfresco.dataGenerator.webscript
+représente les deux méthodes appelées par les deux webscripts: une première se charge de paramétrer le générateur et un second de générer l'ACP.</li>
+</ul>
+
+
+<h1>Mise en place locale (configuration)</h1>
+
+<p>On suppose l'utilisation d'Eclipse Ganymède avec une compilation en 1.5.</p>
+
+<ul>
+<li>Faire un checkout du projet à partir du répertoire S_IDE/FrameworksModules/trunk/com.bluexml.side.framework.alfresco.datasGenerator du SVN</li>
+<li>DAns le Build Path du projet, modifier la variable M2_REPO en indiquant le chemin vers le .m2/repository/com de votre propre répertoire Maven (ceci suppose que vous ayez "installé" le superpom (cf création d'un AMP)</li>
+<li>Pour le développement, indiquer respectivement dans le build.properties les chemins menant au répertoire tomcat de votre Alfresco ainsi que celui menant à votre exécutable maven</li>
+</ul>
+
+
+<h1>Utilisation</h1>
+
+<p>Une fois le projet configuré, créez un modèle via SIDE respectant les caractéristiques exposées dans "Fonctionnalités et limitations". Attention, ce dernier doit posséder un nom explicite au niveau du premier package (ne prenez pas "org" car c'est cet identifiant qui va nous servir dans la suite pour choisir le modèle pour lequel on veut générer des données de test).</p>
+
+<ul>
+<li>Générer et déployer ce modèle en cochant l'option "Alfresco Random Data Generator" dans l'onglet génération (ne cochez pas l'option concernant le module sql car ce dernier provoque à l'heure actuelle une exception bloquante au déploiement de l'ACP)</li>
+<li>Lancer Alfresco</li>
+<li>Appeler le service de paramétrage du générateur à l'adresse :
+
+<ul>
+<li>http:/localhost:8080/alfresco/service/data/form/fillparameters</li>
+</ul>
+</li>
+</ul>
+
+
+<p>Dans la page qui s'affiche :</p>
+
+<ul>
+<li>Choisir le modèle voulu (grâce à l'identifiant sus-cité) :
+
+<ul>
+<li>Indiquer le nombre d'objets à créer tous types confondus ;</li>
+<li>Inidquer le nombre maximum d'instances d'associations par objet ;</li>
+<li>Indiquer également, en respectant la syntaxe XPath d'Alfresco, le chemin vers le répertoire souhaité pour contenir le .acp et les instances générées ;</li>
+</ul>
+</li>
+<li>Cliquer sur generate : le message Succeeded Generation doit apparaître ;</li>
+<li><p>Si c'est le cas, aller sur le web-client d'Alfresco en tant qu'administrateur (admin/admin) : les instances créées et le .acp doivent se trouver dans le répertoire indiqué précédemment.</p>
+
+<p>  Remarque: si vous choisissez toujours le même répertoire pour déployer, ce dernier est "nettoyé" pour recevoir les nouveaux contenus (i.e. les anciens contenus et .acp sont effacés)</p></li>
+</ul>
+
+
+<h1>Développement</h1>
+
+<p>Après toute modification (code Java, webscript), faire un patchWebapps contenu dans le build.xml; ceci déploie directement le module au sein d'Alfresco</p>
+
+<p>Ne relancez le serveur Alfresco que pour toute intervention sur le code Java ou sur le contenu de déclaration des beans (service-context.xml)</p>
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

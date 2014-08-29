@@ -1,0 +1,542 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Automatic Java Class Generation From jBPM Process Definition File</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <h1>Goal</h1>
+
+<p>This page explains how to automatically add action in a jBPM workflow and generate the corresponding java class from a jBPM processdefinition file for each added action. At the end, you'll have a java class with a method for each action in transitions and events. The methods only contain a log statement at first. You then can inherit from it and customize the code if you want.</p>
+
+<h1>Solution</h1>
+
+<p>The solution is achieved in 2 steps:</p>
+
+<ul>
+<li>add a java action for each transition and event</li>
+<li>generate the java class with a method for each action</li>
+</ul>
+
+
+<h1>Add a Java action for each transition and event</h1>
+
+<p>This is done through this xsl code snippet extracted from this xsl stylesheet.</p>
+
+<pre><code>&lt;xsl:template match="transition|event"&gt;
+        &lt;xsl:element name="{name()}"&gt;
+                &lt;xsl:copy-of select="@*"/&gt;
+                &lt;xsl:choose&gt;
+                        &lt;xsl:when test="not(action)
+                                        or (action and $replaceActions = 'true')"&gt;
+                                &lt;action&gt;
+                                        &lt;xsl:apply-templates select=".//script"/&gt;
+                                &lt;/action&gt;
+                        &lt;/xsl:when&gt;
+                        &lt;xsl:otherwise&gt;
+                                &lt;xsl:apply-templates/&gt;
+                        &lt;/xsl:otherwise&gt;
+                &lt;/xsl:choose&gt;
+        &lt;/xsl:element&gt;
+&lt;/xsl:template&gt;
+</code></pre>
+
+<h1>Generate the Java class with a method for each action</h1>
+
+<p>This is done through this xsl code snippet extracted from this xsl stylesheet.</p>
+
+<pre><code>&lt;xsl:template name="create-java-class"&gt;
+        &lt;xsl:param name="package"/&gt;
+        &lt;xsl:param name="class"/&gt;
+
+package &lt;xsl:value-of select="$package"/&gt;;
+
+import org.sidelabs.workflow.SIDEActionHandler;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+public class &lt;xsl:value-of select="$class"/&gt; extends SIDEActionHandler {
+
+        private static final long serialVersionUID = 1L;
+        private static Log logger = LogFactory.getLog(&lt;xsl:value-of select="$class"/&gt;.class);
+
+        /**
+         * Transitions
+         */
+        &lt;xsl:apply-templates select=".//transition"/&gt;
+
+        /**
+         * Events
+         */
+        &lt;xsl:apply-templates select=".//event"/&gt;
+
+}
+        &lt;/xsl:template&gt;
+</code></pre>
+
+<h1>Action</h1>
+
+<p>An ant script is provided in the SIDE-deployer project. Java classes will be stored into the provided package. The class name is based on the name of the workflow. Don't forget to capitalize your workflow name in your SIDE model!</p>
+
+<h1>Build Java classes (and replace existing actions)</h1>
+
+<p>Java classes will be stored into the provided package. The class name is based on the name of the workflow. Don't forget to capitalize your workflow name in your SIDE model!</p>
+
+<pre><code>./build.sh improve-workflows \ -Dworkflow.action.package="org.sidelabs.is.operational.workflow" -DuseProcessDefinitionName="true" -DreplaceActions="true"
+</code></pre>
+
+<h1>Choose the name of the main class if required</h1>
+
+<pre><code>./build.sh improve-workflows \
+  -Dworkflow.action.package="org.sidelabs.is.operational.workflow"
+  -Dworkflow.action.class="Dispatch"
+</code></pre>
+
+<p>Choose not to replace already existing actions</p>
+
+<pre><code>./build.sh improve-workflows \
+  -Dworkflow.action.package="org.sidelabs.is.operational.workflow"
+  -useProcessDefinitionName="true"
+  -DreplaceActions="true"
+</code></pre>
+
+<h1>Conclusion</h1>
+
+<p>You get the following java class:</p>
+
+<pre><code>package org.sidelabs.is.operational.workflow;
+
+import org.sidelabs.workflow.SIDEActionHandler;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+public class Yamma extends SIDEActionHandler {
+
+        private static final long serialVersionUID = 1L;
+        private static Log logger = LogFactory.getLog(Yamma.class);
+
+        /**
+         * Transitions
+         */
+
+                /**
+                  * @param none
+                  *
+                  * @return void
+                  **/
+                public void initialize() {
+                        logger.debug("Processing: initialize");
+                }
+
+                /**
+                  * @param none
+                  *
+                  * @return void
+                  **/
+                public void checkQuality() {
+                        logger.debug("Processing: checkQuality");
+                }
+
+                /**
+                  * @param none
+                  *
+                  * @return void
+                  **/
+                public void accountingIsNOK() {
+                        logger.debug("Processing: accountingIsNOK");
+                }
+
+                /**
+                  * @param none
+                  *
+                  * @return void
+                  **/
+                public void accountingIsOK() {
+                        logger.debug("Processing: accountingIsOK");
+                }
+
+                /**
+                  * @param none
+                  *
+                  * @return void
+                  **/
+                public void legalIsNOK() {
+                        logger.debug("Processing: legalIsNOK");
+                }
+
+                /**
+                  * @param none
+                  *
+                  * @return void
+                  **/
+                public void legalIsOK() {
+                        logger.debug("Processing: legalIsOK");
+                }
+
+                /**
+                  * @param none
+                  *
+                  * @return void
+                  **/
+                public void finish1() {
+                        logger.debug("Processing: finish1");
+                }
+
+                /**
+                  * @param none
+                  *
+                  * @return void
+                  **/
+                public void finish2() {
+                        logger.debug("Processing: finish2");
+                }
+
+                /**
+                  * @param none
+                  *
+                  * @return void
+                  **/
+                public void retry() {
+                        logger.debug("Processing: retry");
+                }
+
+                /**
+                  * @param none
+                  *
+                  * @return void
+                  **/
+                public void decision2() {
+                        logger.debug("Processing: decision2");
+                }
+
+                /**
+                  * @param none
+                  *
+                  * @return void
+                  **/
+                public void termination() {
+                        logger.debug("Processing: termination");
+                }
+
+                /**
+                  * @param none
+                  *
+                  * @return void
+                  **/
+                public void accounting() {
+                        logger.debug("Processing: accounting");
+                }
+
+                /**
+                  * @param none
+                  *
+                  * @return void
+                  **/
+                public void legal() {
+                        logger.debug("Processing: legal");
+                }
+
+        /**
+         * Events
+         */
+
+                /**
+                  * @param none
+                  *
+                  * @return void
+                  **/
+                public void onEnteringNodeMove() {
+                        logger.debug("Processing: onEnteringNodeMove");
+                }
+
+                /**
+                  * @param none
+                  *
+                  * @return void
+                  **/
+                public void onEnteringNodeTermination() {
+                        logger.debug("Processing: onEnteringNodeTermination");
+                }
+
+                /**
+                  * @param none
+                  *
+                  * @return void
+                  **/
+                public void onEnteringNodeError() {
+                        logger.debug("Processing: onEnteringNodeError");
+                }
+
+}
+</code></pre>
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

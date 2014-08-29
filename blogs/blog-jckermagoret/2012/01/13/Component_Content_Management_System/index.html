@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Component Content Management System</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <h1>The Problem To Address</h1>
+
+<p>One more time, to prepare a course, I had to browse all the documentation I wrote to find the right material I needed. Of course, I had to rewrite part of it because it was not structured the right way. I think it's time to organize my content in a way I can reuse it.</p>
+
+<h1>The Solution</h1>
+
+<p>Some solution exist and are called Component Content System. Wikipedia gives us a very clear definition:</p>
+
+<p>A component content management system (CCMS) is a content management system that manages content at a granular level (component) rather than at the document level. Each component represents a single topic, concept or asset (e.g., image, table, product description). Components can be as large as a chapter or as small as a definition or even a word. Components in multiple content assemblies (content types) can be viewed as components or as traditional documents.
+So, in short, I want unit of imformation at an enough low level granularity so I can recreate the content I want it by simply recombining it by hand, through automatic queries based on classification, structure, ...</p>
+
+<h1>The Reality</h1>
+
+<p>Well, it looks like DITA or Docbook.</p>
+
+<h2>DocBook</h2>
+
+<p>I already used Docbook and it's true you can do amazing things but you need to write everything in XML according the docbook schema. OOo does not support it very well and it's a little too complex for non technical users. I tried docbook2odp, which generate clean OOo Presentation but you still need to work with Docbook. I had a look to wiki syntax, such mediawiki, because there is an XML extension to get Docbook format. Unfortunately, exporting preformatted code gives a poor result, so I need to fix it manually. Too boring.</p>
+
+<h2>rST</h2>
+
+<p>I had a look too at rST (reStructuredText) to generate OOo Presentations with rST2odp which almost don't need to be fixed. Moreover, you can apply an OOo Presentation template during rST to odp generation. Unfortunately, there are no tools to convert mediawiki to rST.</p>
+
+<h1>Conclusion</h1>
+
+<p>My requirement is finally very simple. How to make all these tools communicate so I can use my preferred input type and get my preferred output for the tasks I have to achieve? Of course without fixing or rewriting anyting. Just reuse?</p>
+
+<p>I guess I need to go further on DITA which seems the way to go.</p>
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

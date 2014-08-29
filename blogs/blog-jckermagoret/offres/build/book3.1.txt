@@ -1,0 +1,104 @@
+# Présentation de la société BlueXML
+
+## Préambule
+
+Dans le cadre du prototypage d'un important projet dans le Cloud, nous cherchons à constituer une équipe pluri-disciplinaire ayant les profils suivants :
+
+* développeur (pour la mise en oeuvre d'adaptations autour de notre suite logicielle)
+
+* administrateur réseau (pour la définition de l'architecture cloud)
+
+* graphiste (pour les graphismes du site web, de l'offre produit)
+
+* communication (pour la conception de la stratégie de communication et la réalisation du site web)
+
+* marketing (pour l'analyse du marché et sa segmentation)
+
+Les stages sont le moyen de transmettre une connaissance et de participer globalement à la formation des futurs ingénieurs de demain, mais c'est aussi l'occasion de rencontrer nos futurs collaborateurs et d'apprendre à se connaître :
+
+* Pour les étudiants Bac+3, ces stages vous permettront d'appréhender les métiers du développement informatique à travers le regard d'un éditeur logiciel. Dans la mesure du possible, nous espérons en outre vous revoir chez nous les années suivantes ;
+
+* Pour les étudiants Bac+5, ces stages sont des stages de pré-embauche.
+
+## Entreprise
+
+BlueXML est spécialisée dans la GED et a créé un projet open source, BlueDolmen, à destination des collectivités.
+
+### BlueXML, spécialiste de la GED Alfresco
+
+BlueXML est spécialisée dans la GED [Alfresco](http://www.alfresco.com), leader de la GED open source. Notre société est le seul expert Alfresco, au niveau mondial, qui soit partenaire technologique et partenaire intégrateur.
+
+Nous intervenons en audit, consulting et développement de projets de gestion documentaire avec :
+
+* Des clients administrations et services publics comme le Ministère de l'Intérieur, l'ANFR, la CNAV, Ifremer
+
+* Des collectivités comme la le CG 17, la CdA de La Rochelle, la ville de Rochefort, la ville de Coulaines
+
+* Des entreprises du milieu industriel comme BritAir, Thales, Schneider Electric, EDF...
+
+### BlueDolmen, pour les collectivités
+
+BlueXML est le fondateur du projet open source [Bluedolmen](http://www.bluedolmen.org), qui propose une suite fonctionnelle documentaire à destination des collectivités (gestion de courrier, gestion des délibérations, parapheur électronique, ...). Ce projet héberge également une solution technique, développée par BlueXML (SIDE-Labs - http://www.bluedolmen.org/www/app-blue-studio.html), permettant à des experts fonctionnels de  développer rapidement des solutions Alfresco robustes.
+
+## Conditions générales des offres de stage
+
+* Métier : Informatique - Réseau - Télécoms
+
+* Secteur : High-Tech / Editeur logiciel
+
+* Type de contrat : Stage 3 à 6 mois
+
+* Niveau d'études : Bac+3 à Bac+5
+
+* Niveau d'expérience : Etudiant
+
+* Salaire : de 500€ à 1K€/mois
+
+* Horaires : 35h
+
+* Avantages : tickets restaurants
+
+# H/F Stage Marketing Bac+3 à Bac+5
+
+## Conditions particulières de l'offre
+
+* Mots-clés : Business Plan, TAM/SAM/SOM, Segmentation, e-Mailing, Stat Analytics, Advert
+
+* Référence : stage-marketing
+
+## Poste et missions
+
+Sous la responsabilité du Directeur Marketing, vous participerez à l'étude du marché des collectivités, sa segmentation et la définition de son marketing mix. Vous définirez des stratégies de communication originales basées sur le web, facebook, twitter et participerez à leur mise en place à travers la réalisation d'un site en collaboration avec un développeur et un graphiste. Vous analyserez les statistiques de consultation et suivrez leur évolution.
+
+Vous êtes passionné(e) par l'informatique et les nouveaux médias, rigoureux(se), créatif(ve) et vous aimez les défis commerciaux. Vous aimez apprendre de nouvelles méthodes et approches. Vous êtes pragmatique, vous avez le sens du service et aimez les stratégies marketing décalées : rejoignez-nous !
+
+## Profil
+
+De niveau Bac+3 à Bac+5, en grande école de commerce ou universitaire de gestion, vous avez déjà une culture marketing online. La connaissance des réseaux sociaux, des milieux publicitaires (fonctionnement d'une régie, connaissance des régies de google) et de l'anglais sont un plus.
+
+# Informations complémentaires
+
+## Encadrement
+
+Selon vos besoins et votre degré d'autonomie, nous vous encadrerons afin que votre stage se déroule dans les meilleures conditions possibles et qu'il soit pleinement profitable pour chacun. A nouveau, si vous êtes Bac+5, nous serons ravis de vous compter parmi nous à la fin.
+
+## Savoir communiquer
+
+Au-delà d'une compétence, nous attendons également du candidat une réelle volonté de communiquer son savoir-faire à travers les nouveaux médias (blog, twitter...) qui se traduira par une publication régulière.
+
+La connaissance de l'anglais est un plus.
+
+## Contact
+
+Si une de nos offres vous intéresse ou intéresse une de vos connaissances, n'hésitez pas à revenir vers nous et à contacter M. Jean-Christophe KERMAGORET. Merci d'adresser vos CV, lettre de motivation et demande à rh@bluexml.com.
+
+Vous pouvez également nous contacter par téléphone au 02.40.46.62.78.
+
+# A bientôt !
+
+En espérant vous rencontrer bientôt,
+
+Jean-Christophe KERMAGORET
+
+Directeur associé
+

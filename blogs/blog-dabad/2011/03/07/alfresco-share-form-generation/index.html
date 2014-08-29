@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Alfresco Share Forms Generation</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <p>This is done by generating a xml file following form-config-3.3.xsd schema, and extends springs context to enable share to load the generated files.</p>
+
+<h1>Integration</h1>
+
+<p>How SIDE set Share to use a form definition for specific application part ?</p>
+
+<ul>
+<li>Alfresco Share search configuration that match with the data type (condition#"&lt; Qname>")</li>
+<li>the form share components use default forms (without @id) unless the formid parameter is set</li>
+<li>SIDE use Form model with Class Form Collection named "default" to generate default forms configuration, other generated models have a @id with value equals to the Class Form Collection name</li>
+<li>SIDE use Portal model to generate specific component configuration (with formid)</li>
+</ul>
+
+
+<h1>Kerblue Form Model supported features</h1>
+
+<h2>Form classes collection</h2>
+
+<ul>
+<li>Avoid collision on generated form configuration :
+In the case of you need to integrate form models that uses the same FormCollection name you could use "forcedModelName" MetaInfo on FormCollection to force the generator to use your value when generating files so files will be generated in dedicated directory and do not override some others files.</li>
+</ul>
+
+
+<h3>Form</h3>
+
+<ul>
+<li>presentation :
+
+<ul>
+<li>tabbed, display all groups as tabs (subgroups are displayed too but without imbrication)</li>
+<li>auto and others no supported, fields displayed in order.</li>
+</ul>
+</li>
+<li>use isEditForm / isCreateForm Metadata to have dedicated forms, without metadata the default behaviour is to generate form for edit and create mode
+
+<ul>
+<li>add metadata key#isEditForm value#true|false</li>
+<li>add metadata key#isCreateForm value#true|false</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>FormGroup</h3>
+
+<ul>
+<li>id, the label id used as i18n key</li>
+<li>label, used to generate i18n catalog</li>
+</ul>
+
+
+<h3>Fields</h3>
+
+<p>Fields types do not affect generation, we let alfresco form engine use default controls and fields rendition.
+But define a special rendition is easy.</p>
+
+<ul>
+<li>use metaInfo{key#template, value#"&lt; templatePath>.ftl"} to set the freemarker renderer, all control parameters can be sets using metaInfo To know available parameters for each control see http://wiki.alfresco.com/wiki/Forms#Configuring_Controls</li>
+<li>Alfresco pseudo-fields like content.mimeType :
+
+<ul>
+<li>Copy/edit the field cm:content.</li>
+<li>On the field that refer to cm:content add metaInfo{key#"pseudo-field", value#"mimetype|size|encoding"}.</li>
+<li>Generator will select the right form control for you, but as any field you can use metaInfo to set the freemarker renderer.</li>
+</ul>
+</li>
+<li>helpText, can initialize i18n bundle.</li>
+<li>field-autocomplite.ftl
+
+<ul>
+<li>template : /side/controls/field-autocomplete.ftl</li>
+<li>getDataSource : must define js function see association-autocomplite documentation</li>
+<li>hiddenValueIsLabel : [true|false] this allow the form to send the label instead of nodeRef</li>
+<li>allowInvalide : [true|false] allow to enter value not present in item list returned by the data source</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>AssociationFields (MM ModelChoiceFields)</h3>
+
+<p>Main properties are automatically set by the initialize action, but some properties could be edited :</p>
+
+<ul>
+<li>Association form Class, allow the "Add" and "Edit" features , so user can create/edit a item to select.</li>
+<li>To disable Add feature create metadata key#allowToCreate, value#false</li>
+<li>To disable Edit feature create metadata key#allowToEdit, value#false</li>
+</ul>
+
+
+<p>For Advanced configuration see [[SHARE_FORMS_ASSOCIATIONS | Advanced association fields configuration]]</p>
+
+<h2>Form search collection</h2>
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

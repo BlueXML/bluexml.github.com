@@ -1,0 +1,76 @@
+<html>
+<head>
+<style>
+
+/* http://code.tutsplus.com/tutorials/simple-parallax-scrolling-technique--net-27641 */
+
+#home {
+  background: url(alfresco-cloud-extranet-collaboration.jpg) 50% 0 repeat fixed; min-height: 1000px;
+  height: 1000px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1920px;
+  position: relative;
+}
+
+#text {
+  background: white 50% 0 repeat fixed; min-height: 500px;
+  height: 500px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1920px;
+  position: relative;
+}
+
+#about {
+  background: url(alfresco-cloud-security.jpg) 50% 0 repeat fixed; min-height: 1000px;
+  height: 1000px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1920px;
+  position: relative;
+  -webkit-box-shadow: 0 0 50px rgba(0,0,0,0.8);
+  box-shadow: 0 0 50px rgba(0,0,0,0.8);
+}
+
+article {
+  height: 458px;
+  position: absolute;
+  text-align: center;
+  top: 150px;
+  width: 100%;
+}
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $('section[data-type="background"]').each(function(){
+        var $bgobj = $(this); // assigning the object
+
+        $(window).scroll(function() {
+            var yPos = -($window.scrollTop() / $bgobj.data('speed'));
+
+            // Put together our final background position
+            var coords = '50% '+ yPos + 'px';
+
+            // Move the background
+            $bgobj.css({ backgroundPosition: coords });
+        });
+    });
+});
+</script>
+</head>
+<body>
+<!-- Section #1 -->
+<section id="home" data-speed="10" data-type="background">
+  <article>I am Absolute Positioned</article>
+</section>
+<section id="text" data-speed="10" data-type="background">
+  <article>Some text with some image</article>
+</section>
+<!-- Section #2 -->
+<section id="about" data-speed="4" data-type="background">
+  <article>Simple Parallax Scroll</article>
+</section>
+</body>
+</html>

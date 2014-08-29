@@ -1,0 +1,343 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Share Data List</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <p>This page explains :</p>
+
+<ul>
+<li>How to customize alfresco share DataListItem and use them as selectable value in custom class.</li>
+<li>How to define DocumentLibrary Filter on such DataList.</li>
+</ul>
+
+
+<h1>DataModel</h1>
+
+<h2>Extends from DataListItem</h2>
+
+<ul>
+<li>Create a new Class "MyDataList"</li>
+<li>Load Alfresco cm:content.dt model</li>
+<li>Drag'n drop DataListItem Class into your diagram</li>
+<li>Add generalization link from "MyDataList" to "DataListItem"</li>
+</ul>
+
+
+<h2>Add Association to DataListItem</h2>
+
+<ul>
+<li>Create a new Class "MyDocument"</li>
+<li>Add association to "MyDataList"</li>
+<li>Select the association and in option, set "searchable" to true</li>
+</ul>
+
+
+<h1>Configure Forms to use DataList</h1>
+
+<p>Use initialize action on project, this creates all defaults models.</p>
+
+<h2>DataListItem Forms</h2>
+
+<p>No special changes are required, but you may want to remove some disturbing fields.</p>
+
+<h2>Setup ModelChoiseField</h2>
+
+<p>On "MyDocument" forms in default.form:</p>
+
+<ul>
+<li>Select the field (ModelChoiceField) of the association to "DataListItem"</li>
+<li>In properties view, choose the widget to use (see widgets for associations)</li>
+</ul>
+
+
+<h1>Add Filter on document library page</h1>
+
+<ul>
+<li>Open &lt; project>.portaldi model file</li>
+<li>Load resource /Model-library-Alfresco-3.4.6-EE/portal/alfrescoSharePortal.portaldi</li>
+<li>Copy DocumentLibrary Page (unselect all references to keep them all)</li>
+<li>Create a new Portlet (fill portal.name, portal.title)</li>
+<li>Load resource /Model-library-SIDE-Built-in/portal/buildInLibraryAlfresco.portal</li>
+<li>Drag'n drop "DynamicFilter" "Portal Portlet"</li>
+<li>Add isPortalPortel link</li>
+<li>Edit the link and fill :</li>
+<li>url: /components/dynamicFilter</li>
+<li>scope: template</li>
+<li>dataType: MyDataList prefixedQName (myproject:MyDataList)</li>
+<li>dataTemplate: {type: '&lt; MyDocumentQName>', fields : {'&lt; associationQName>search' : {type :'string', operator:'is', values : ['{nodeRef}']}}}</li>
+<li>filterType: metadata</li>
+</ul>
+
+
+<p>Metadata filter will be used to fill the document list, by searching any &lt; MyDocumentQName> with property &lt; associationQName>search equal to the current selected node.</p>
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

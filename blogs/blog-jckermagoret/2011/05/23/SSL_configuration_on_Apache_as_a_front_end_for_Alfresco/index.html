@@ -1,0 +1,330 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>SSL configuration on Apache as a front end for Alfresco</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <h1>Use Case</h1>
+
+<p>I want to secure Alfresco (webdav) and Share Access through SSL.</p>
+
+<h1>Solution</h1>
+
+<p>The solution is to secure Alfresco access through Apache-SSL.</p>
+
+<p>Why not directly use Tomcat SSL? Because I want to protect 2 tomcat instances and only make one SSL installation. Moreover, I need some Apache specific features like rewriting ones.</p>
+
+<p>Only Apache access will be available so Alfresco will be available through ProxyPass features. Direct access is prohibited at the tomcat level.</p>
+
+<h1>Configuration</h1>
+
+<h2>SSL Configuration</h2>
+
+<pre><code>cd /etc/ssl
+openssl genrsa -des3 -rand file1:file2:file3:file4:file5 -out server-with-passphrase.key 2048
+openssl rsa -in server-with-passphrase.key -out server.pem
+openssl req -new -key server.pem -out server.csr
+openssl x509 -req -days 365 -in server.csr -signkey server.pem -out server.crt
+</code></pre>
+
+<h2>SSL Apache Configuration</h2>
+
+<p>You can then create the following configuration into your apache configuration file:</p>
+
+<pre><code>SSLEngine on
+SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP:+eNULL
+SSLCertificateFile /etc/ssl/certs-specific/gollum.bluexml.com.crt
+SSLCertificateKeyFile  /etc/ssl/private/gollum.bluexml.com.pem
+</code></pre>
+
+<h2>ProxyPass Apache Configuration</h2>
+
+<p>Don't forget to activate proxy_http module:</p>
+
+<pre><code>a2enmod proxy_http
+</code></pre>
+
+<p>You can then create the following configuration into your apache configuration file:</p>
+
+<pre><code>&lt;Proxy *&gt;
+  AddDefaultCharset Off
+  Order deny,allow
+  Allow from all
+&lt;/Proxy&gt;
+
+ProxyPass /share http://localhost:8080/share
+ProxyPassReverse /share http://localhost:8080/share
+
+ProxyPass /alfresco http://localhost:8080/alfresco
+ProxyPassReverse /alfresco http://localhost:8080/alfresco
+</code></pre>
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+

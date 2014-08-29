@@ -1,0 +1,325 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Share Language Picker</title>
+    
+    <meta name="author" content="Jean-Christophe KERMAGORET">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/css/1.4.0/bootstrap.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="/">Blue Team's Blog</a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <h1>Goal</h1>
+
+<p>This module aims to extend the language selection in Alfresco Share. Natively, there is one way by switching preferred language at your browser level. ShareLanguagePicker adds 2 programmatic ways to do it and provides a dashlet to switch by clicking...</p>
+
+<h1>Language determination sequence</h1>
+
+<p>Here is the new priority sequence for language determination in Share :</p>
+
+<ul>
+<li>In the URI by specifying a GET parameter : shareLang. The value is copied in a session variable.
+Ex: localhost:8080/share/page/user/admin/dashboard?'''shareLang=fr_FR'''</li>
+<li>In the session variable '''shareLang''' if nothing passed in the URI.</li>
+<li>If there's no parameter in the URI and no shareLang variable in the session, the native operation applies, as your browser preference is satisfied.</li>
+</ul>
+
+
+<p>This new selection schema is due to the customization of the original pageRenderer component (DispatcherServlet => CustomDispatcherServlet). The activation of this new pageRenderer implies a modification in web.xml (in the webapp "share") :</p>
+
+<h1>Implementation</h1>
+
+<p>Original extract :</p>
+
+<p>   <!-- The Web Framework Dispatcher Servlet -->
+   <servlet></p>
+
+<pre><code>  &lt;servlet-name&gt;pageRendererServlet&lt;/servlet-name&gt;
+  &lt;servlet-class&gt;org.alfresco.web.site.servlet.DispatcherServlet&lt;/servlet-class&gt;
+  &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+</code></pre>
+
+<p>   </servlet></p>
+
+<p>Customized extract of web.xml</p>
+
+<p>   <!-- The Web Framework Dispatcher Servlet -->
+   <servlet></p>
+
+<pre><code>  &lt;servlet-name&gt;pageRendererServlet&lt;/servlet-name&gt;
+  '''&lt;servlet-class&gt;&lt;font color="red"&gt;com.bluexml.side.Framework.alfresco.shareLanguagePicker.CustomDispatcherServlet&lt;/font&gt;&lt;/servlet-class&gt;'''
+  &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+</code></pre>
+
+<p>   </servlet></p>
+
+<h1>Result</h1>
+
+<p>The dashlet allows to switch language by clicking on the flag of your choice :</p>
+
+<p><img src="languagePicker dashlet.jpg"/></p>
+
+      </div>
+
+    </div> <!-- /container -->
+
+	<div style="text-align: center">
+      <footer>
+        <p>&copy; Jean-Christophe KERMAGORET 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+	</div>
+    
+  </body>
+</html>
+
